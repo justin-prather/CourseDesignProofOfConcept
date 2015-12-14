@@ -9,6 +9,9 @@ canvas {
   border: 2px solid #000000;
 }
 
+li {
+  margin-bottom: 5px;
+}
 /* Space out content a bit */
 body {
   padding-top: 20px;

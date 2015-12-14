@@ -1,6 +1,7 @@
 var update = false;
 var canvas, stage;
 var scale, railLength;
+var template;
 
 var activeRail;
 
@@ -27,24 +28,35 @@ var setRingParams = function(){
 
 $(function(){
 
+	template = Handlebars.compile($('#rails-template').html());
+
 	$('#submit').click( setRingParams );
 	
 	canvas = document.getElementById('demoCanvas');
 	canvas.addEventListener("mousewheel", MouseWheelHandler, false);
 	setRingParams();
 
-	console.log(canvas);
 	stage = new createjs.Stage(canvas);
 
 	stage.addEventListener("stagemousedown", function(event){
 		if( !dblClick ){
 			dblClick = true;
 			setTimeout(function(){ dblClick = false}, 200);
+			activeRail = null;
 		}
 		else{
 			rails.push(newRail("Red", event.stageX, event.stageY));
 			update = true;
 		}
+	});
+
+	$('#rails').on( 'click', '.delete', function(){
+		var btn = event.target;
+		var index = $(btn).parent().attr('id');
+
+		stage.removeChild(rails[index]);
+		rails.splice( index, 1 );
+		update = true;
 	});
 
 	stage.update();
@@ -56,6 +68,7 @@ function tick(event) {
 	// this set makes it so the stage only re-renders when an event handler indicates a change has happened.
 	if (update) {
 		update = false; // only update once
+		updateList();
 		stage.update(event);
 	}
 }
@@ -74,11 +87,11 @@ var newRail = function(color, x, y) {
 
 	rect.on("mousedown", function(evt){
 		this.offset = {x: this.x - evt.stageX, y: this.y - evt.stageY};
-		activeRail = this;
 	});
 
-	rect.on("mouseup", function(evt){
-		activeRail = null;
+	rect.on("click", function(evt){
+		console.log('hello');
+		activeRail = this;
 	});
 
 	// the pressmove event is dispatched when the mouse moves after a mousedown on the target until the mouse is released.
@@ -90,13 +103,31 @@ var newRail = function(color, x, y) {
 	});
 
 	stage.addChild(rect);
+
 	return rect;
 }
+
+var updateList = function(){
+	var data = {};
+	$('#rails').empty();
+	for ( var i = 0; i < rails.length; i++ ){
+		data.index = i;
+		data.x = rails[i].x;
+		data.y = rails[i].y;
+		data.angle = rails[i].rotation;
+		$('#rails').append(template(data));
+	}
+};
 
 var MouseWheelHandler = function(event){
 	var delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
 	if( activeRail != null && activeRail != undefined ){
-		activeRail.rotation += delta*5;
+		var rotation = activeRail.rotation;
+		rotation += delta*5;
+		if ( rotation > 360 ) activeRail.rotation = rotation - 360;
+		else if ( rotation < 0 ) activeRail.rotation = rotation + 360;
+		else activeRail.rotation = rotation;
+		update = true;
 	}
 	event.preventDefault();
 	return false;
