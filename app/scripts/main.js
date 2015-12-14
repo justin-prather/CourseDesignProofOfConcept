@@ -23,6 +23,12 @@ var setRingParams = function(){
 
 	canvas.height = windowWidth*ratio;
 
+	var length = rails.length;
+	for ( var i = 0; i < length; i++ ){
+		rails.push(newRail("Purple", "red", rails[i].x, rails[i].y));
+		stage.removeChild(rails[i]);
+		rails.splice( i, 1 );
+	}
 	update = true;
 };
 
@@ -45,7 +51,7 @@ $(function(){
 			activeRail = null;
 		}
 		else{
-			rails.push(newRail("Red", event.stageX, event.stageY));
+			rails.push(newRail("Purple", "red", event.stageX, event.stageY));
 			update = true;
 		}
 	});
@@ -73,15 +79,21 @@ function tick(event) {
 	}
 }
 
-var newRail = function(color, x, y) {
+var newRail = function(color, selectColor, x, y) {
 	var rect = new createjs.Shape();
-	rect.graphics.beginFill(color).drawRect(0, 0, railLength*scale, 2*scale);
+	var circle = new createjs.Shape();
+
+	rect.graphics.beginFill(color).drawRect(0, 0, railLength*scale, 1.5*scale);
+	circle.graphics.beginFill(selectColor).drawCircle( 0, 0, railLength*scale/2 );
+
+	circle.alpha = 0.3;
+	circle.visible = false;
 
 	rect.regX = railLength*scale/2;
 	rect.regY = scale;
 
-	rect.x = x;
-	rect.y = y;
+	rect.x = circle.x = x;
+	rect.y = circle.y = y;
 
 	rect.rotation = 90;
 
@@ -102,6 +114,7 @@ var newRail = function(color, x, y) {
 		update = true;
 	});
 
+	stage.addChild(circle);
 	stage.addChild(rect);
 
 	return rect;
@@ -112,8 +125,8 @@ var updateList = function(){
 	$('#rails').empty();
 	for ( var i = 0; i < rails.length; i++ ){
 		data.index = i;
-		data.x = rails[i].x;
-		data.y = rails[i].y;
+		data.x = parseFloat(rails[i].x/scale).toFixed(2);
+		data.y = parseFloat(rails[i].y/scale).toFixed(2);
 		data.angle = rails[i].rotation;
 		$('#rails').append(template(data));
 	}
