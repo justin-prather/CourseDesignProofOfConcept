@@ -12,6 +12,13 @@ canvas {
 li {
   margin-bottom: 5px;
 }
+
+.functions {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-bottom:  2px solid #AAAAAA;
+  padding-bottom: 10px;
+}
 /* Space out content a bit */
 body {
   padding-top: 20px;
