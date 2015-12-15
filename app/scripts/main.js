@@ -68,9 +68,11 @@ function tick(event) {
 }
 
 var setRingParams = function(){
-	var ringWidth = $('#widthInput').val();
-	var ringHeight = $('#heightInput').val();
+	var ringWidth = Number($('#widthInput').val());
+	var ringHeight = Number($('#heightInput').val());
 
+	console.log( ringHeight + ' ' + ringWidth );
+	console.log( ringHeight > ringWidth );
 	if( ringHeight > ringWidth ){
 		var temp = ringWidth;
 		ringWidth = ringHeight;
