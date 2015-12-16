@@ -26,6 +26,7 @@ $(function(){
 	setRingParams();
 
 	stage = new createjs.Stage(canvas);
+	createjs.Touch.enable(stage);
 
 	stage.addEventListener("stagemousedown", function(event){
 		if( !dblClick ){
