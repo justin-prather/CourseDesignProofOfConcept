@@ -148,7 +148,7 @@ var newRail = function(color, selectColor, x, y) {
 
 				var distance = Math.abs( hypoteneus( endX - startX, endY - startY ) );
 
-				$('#measurment').toggleClass('hidden').text(parseFloat(distance / scale).toFixed(2) + ' Feet' );
+				$('#measurment').text(parseFloat(distance / scale).toFixed(2) + ' Feet' );
 				measure();
 			}
 		}
@@ -208,5 +208,5 @@ var measure = function(){
 		mode = 0;
 		$('#measure').removeClass('btn-success');
 		$('#measure').addClass('btn-default');
-		}
+	}
 }
