@@ -59,21 +59,10 @@ $(function(){
 	createjs.Ticker.addEventListener("tick", tick);
 });
 
-function tick(event) {
-	// this set makes it so the stage only re-renders when an event handler indicates a change has happened.
-	if (update) {
-		update = false; // only update once
-		updateList();
-		stage.update(event);
-	}
-}
-
 var setRingParams = function(){
 	var ringWidth = Number($('#widthInput').val());
 	var ringHeight = Number($('#heightInput').val());
 
-	console.log( ringHeight + ' ' + ringWidth );
-	console.log( ringHeight > ringWidth );
 	if( ringHeight > ringWidth ){
 		var temp = ringWidth;
 		ringWidth = ringHeight;
@@ -89,28 +78,34 @@ var setRingParams = function(){
 	canvas.width = windowWidth;
 
 	scale = windowWidth/ringWidth;
-	console.log(railLength*scale);
 
 	canvas.height = windowWidth*ratio;
 
+	activeRail = null; 
+
 	var length = rails.length;
+	var tempRails = [];
 	for ( var i = 0; i < length; i++ ){
-		rails.push(newRail("Purple", "red", rails[i].x, rails[i].y));
+		tempRails.push(newRail("Purple", "red", rails[i].x, rails[i].y,
+			rails[i].rotation, false));
 		stage.removeChild(rails[i]);
-		rails.splice( i, 1 );
 	}
+	rails = tempRails;
 	update = true;
 };
 
-var newRail = function(color, selectColor, x, y) {
+var newRail = function(color, selectColor, x, y, angle, selected) {
+	angle = typeof angle !== 'undefined'? angle : 0; // default angle if none supplied
+	selected = typeof selected !== 'undefined'? selected : true;
+
 	var rect = new createjs.Shape();
 	var circle = new createjs.Shape();
 	var container = new createjs.Container();
 	container.mouseChildren = false;
 
 	rect.graphics.beginFill(color).drawRect(0, 0, railLength*scale, 1.5*scale);
-	circle.graphics.beginRadialGradientFill([selectColor, 'rgba(255, 255, 255, 0)'], [0.9,0.1], 0, 0, 0, 0, 0, railLength*scale*1.2)
-		.drawCircle( 0, 0, railLength*scale/2 );
+	circle.graphics.beginRadialGradientFill([selectColor, 'rgba(255, 255, 255, 0)'], 
+		[0.9,0.1], 0, 0, 0, 0, 0, railLength*scale*1.2).drawCircle( 0, 0, railLength*scale/2 );
 
 	circle.alpha = 0.9;
 
@@ -120,10 +115,10 @@ var newRail = function(color, selectColor, x, y) {
 	container.x = x;
 	container.y = y;
 
-	rect.rotation = 90;
-
 	container.addChild(circle);
 	container.addChild(rect);
+
+	container.rotation = angle;
 
 	container.on("mousedown", function(evt){
 		this.offset = {x: this.x - evt.stageX, y: this.y - evt.stageY};
@@ -164,7 +159,12 @@ var newRail = function(color, selectColor, x, y) {
 
 	stage.addChild(container);
 
-	activeRail = container;
+	circle.visible = false; 
+	
+	if ( selected ){
+		activeRail = container;
+		circle.visible = true;
+	}
 
 	return container;
 }
@@ -208,5 +208,14 @@ var measure = function(){
 		mode = 0;
 		$('#measure').removeClass('btn-success');
 		$('#measure').addClass('btn-default');
+	}
+}
+
+function tick(event) {
+	// this set makes it so the stage only re-renders when an event handler indicates a change has happened.
+	if (update) {
+		update = false; // only update once
+		updateList();
+		stage.update(event);
 	}
 }
