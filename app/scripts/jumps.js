@@ -1,4 +1,4 @@
-var newRail = function(color, selectColor, x, y, angle, selected) {
+var vertical = function(index, color, selectColor, x, y, angle, selected) {
 	angle = typeof angle !== 'undefined'? angle : 0; // default angle if none supplied
 	selected = typeof selected !== 'undefined'? selected : true;
 
@@ -69,6 +69,9 @@ var newRail = function(color, selectColor, x, y, angle, selected) {
 		activeRail = rails.length;
 		circle.visible = true;
 	}
+
+	container.index = index;
+	container.type = vertical;
 
 	return container;
 }
