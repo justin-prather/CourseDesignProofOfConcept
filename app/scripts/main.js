@@ -42,7 +42,7 @@ $(function(){
 			}
 		}
 		else{
-			var nRail = vertical(rails.length, "Purple", "red", event.stageX, event.stageY);
+			var nRail = vertical(rails.length, "Purple", "red", event.stageX, event.stageY, 0);
 			rails.push( nRail );
 			update = true;
 		}
@@ -90,7 +90,7 @@ var setRingParams = function(){
 	var tempRails = [];
 	for ( var i = 0; i < length; i++ ){
 		tempRails.push(rails[i].type(i, "Purple", "red", rails[i].x, rails[i].y,
-			rails[i].rotation, false));
+			rails[i].spread, rails[i].rotation, false));
 		stage.removeChild(rails[i]);
 	}
 	rails = tempRails;
