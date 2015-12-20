@@ -14,7 +14,7 @@ var vertical = function(index, color, selectColor, x, y, spread, angle, selected
 	circle.alpha = 0.9;
 
 	rect.regX = railLength*scale/2;
-	rect.regY = scale;
+	rect.regY = 1.5*scale/2;
 
 	container.x = x;
 	container.y = y;
@@ -48,6 +48,71 @@ var vertical = function(index, color, selectColor, x, y, spread, angle, selected
 
 	container.index = index;
 	container.type = vertical;
+	container.spread = spread;
+
+	return container;
+}
+
+var oxer = function(index, color, selectColor, x, y, spread, angle, selected) {
+	angle = typeof angle !== 'undefined'? angle : 0; // default angle if none supplied
+	selected = typeof selected !== 'undefined'? selected : true;
+
+	var rectA = new createjs.Shape();
+	var rectB = new createjs.Shape();
+	var rectBack = new createjs.Shape();
+
+	var circle = new createjs.Shape();
+	var container = new createjs.Container();
+	container.mouseChildren = false;
+
+	rectA.graphics.beginFill(color).drawRect(0, 0, railLength*scale, 1.5*scale);
+	rectB.graphics.beginFill(color).drawRect(0, 0, railLength*scale, 1.5*scale);
+	rectBack.graphics.beginFill('White').drawRect(0, 0, railLength*scale, 1.5*scale);
+
+	circle.graphics.beginRadialGradientFill([selectColor, 'rgba(255, 255, 255, 0)'], 
+		[0.9,0.1], 0, 0, 0, 0, 0, railLength*scale*1.2).drawCircle( 0, 0, railLength*scale/2 );
+
+	circle.alpha = 0.9;
+
+	rectA.regX = railLength*scale/2;
+	rectA.regY = (1.5*scale/2)+spread/2;
+
+	rectB.regX = railLength*scale/2;
+	rectB.regY = (1.5*scale/2)-spread/2;
+
+	container.x = x;
+	container.y = y;
+
+	container.addChild(circle);
+	container.addChild(rectA);
+	container.addChild(rectB);
+
+	container.rotation = angle;
+
+	container.on("mousedown", function(evt){
+		onContainerMouseDown(evt);
+	});
+
+	container.on("click", function(evt){
+		onContainerClick(evt);
+	});
+
+	// the pressmove event is dispatched when the mouse moves after a mousedown on the target until the mouse is released.
+	container.on("pressmove", function (evt) {
+		onContainerPressMove(evt);
+	});
+
+	stage.addChild(container);
+
+	circle.visible = false; 
+	
+	if ( selected ){
+		activeRail = rails.length;
+		circle.visible = true;
+	}
+
+	container.index = index;
+	container.type = oxer;
 	container.spread = spread;
 
 	return container;
