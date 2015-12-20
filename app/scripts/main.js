@@ -1,9 +1,11 @@
+'use strict';
 var update = false;
 var canvas, stage;
 var scale, railLength;
 var template;
 
-var activeRail = null;
+var activeRail = -1;
+
 
 var rails = [];
 
@@ -19,7 +21,7 @@ $(function(){
 	template = Handlebars.compile($('#rails-template').html());
 
 	$('#submit').click( setRingParams );
-	$('#measure').click( event, measure );
+	$('#measure').click( event, measureClick );
 	
 	canvas = document.getElementById('demoCanvas');
 	canvas.addEventListener("mousewheel", MouseWheelHandler, false);
@@ -34,13 +36,15 @@ $(function(){
 			setTimeout(function(){ dblClick = false}, 200);
 			
 			if( mode == 0 ){
-				if ( activeRail != null ) activeRail.children[0].visible = false;
-				activeRail = null;
+				if ( activeRail != -1 ) rails[activeRail].children[0].visible = false;
+				activeRail = -1;
 				update = true;
 			}
 		}
 		else{
-			rails.push(newRail("Purple", "red", event.stageX, event.stageY));
+			var nRail = newRail("Purple", "red", event.stageX, event.stageY);
+			nRail.index = rails.length;
+			rails.push( nRail );
 			update = true;
 		}
 	});
@@ -81,7 +85,7 @@ var setRingParams = function(){
 
 	canvas.height = windowWidth*ratio;
 
-	activeRail = null; 
+	activeRail = -1; 
 
 	var length = rails.length;
 	var tempRails = [];
@@ -126,25 +130,25 @@ var newRail = function(color, selectColor, x, y, angle, selected) {
 
 	container.on("click", function(evt){
 		if( mode == 0 ){ 
-			activeRail = this;
+			activeRail = this.index;
 			this.children[0].visible = true;
 			update = true;
 		}
 		else if( mode == 1 ){
-			if ( activeRail == null || activeRail == undefined ){
-				activeRail = this;
+			if ( activeRail == -1 ){
+				activeRail = this.index;
 				this.children[0].visible = true;
 				update = true;
 			} else {
-				var startX = activeRail.x;
-				var startY = activeRail.y;
+				var startX = rails[activeRail].x;
+				var startY = rails[activeRail].y;
 				var endX = this.x;
 				var endY = this.y;
 
 				var distance = Math.abs( hypoteneus( endX - startX, endY - startY ) );
 
 				$('#measurment').text(parseFloat(distance / scale).toFixed(2) + ' Feet' );
-				measure();
+				measureClick();
 			}
 		}
 	});
@@ -162,16 +166,12 @@ var newRail = function(color, selectColor, x, y, angle, selected) {
 	circle.visible = false; 
 	
 	if ( selected ){
-		activeRail = container;
+		activeRail = rails.length;
 		circle.visible = true;
 	}
 
 	return container;
 }
-
-var hypoteneus = function( x, y ){
-	return Math.sqrt( (x*x) + (y*y) );
-};
 
 var updateList = function(){
 	var data = {};
@@ -181,25 +181,26 @@ var updateList = function(){
 		data.x = parseFloat(rails[i].x/scale).toFixed(2);
 		data.y = parseFloat(rails[i].y/scale).toFixed(2);
 		data.angle = rails[i].rotation;
+		data.class = activeRail == i ? 'selected' : '';
 		$('#rails').append(template(data));
 	}
 };
 
 var MouseWheelHandler = function(event){
 	var delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
-	if( activeRail != null && activeRail != undefined ){
-		var rotation = activeRail.rotation;
-		rotation += delta*5;
-		if ( rotation > 360 ) activeRail.rotation = rotation - 360;
-		else if ( rotation < 0 ) activeRail.rotation = rotation + 360;
-		else activeRail.rotation = rotation;
+	if( activeRail != -1 ){
+		var rotation = rails[activeRail].rotation;
+		rotation += delta;
+		if ( rotation > 180 ) rails[activeRail].rotation = rotation - 180;
+		else if ( rotation < 0 ) rails[activeRail].rotation = rotation + 180;
+		else rails[activeRail].rotation = rotation;
 		update = true;
 	}
 	event.preventDefault();
 	return false;
 };
 
-var measure = function(){
+var measureClick = function(){
 	if ( mode != 1 ){
 		mode = 1;
 		$('#measure').addClass('btn-success');
