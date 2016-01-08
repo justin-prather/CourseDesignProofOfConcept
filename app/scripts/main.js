@@ -30,7 +30,7 @@ $(function(){
 	stage = new createjs.Stage(canvas);
 	createjs.Touch.enable(stage);
 
-	stage.addEventListener("stagemousedown", function(event){
+	stage.on("stagemousedown", function(event){
 		if( !dblClick ){
 			dblClick = true;
 			setTimeout(function(){ dblClick = false}, 200);
@@ -42,7 +42,7 @@ $(function(){
 			}
 		}
 		else{
-			var nRail = vertical(rails.length, "Purple", "red", event.stageX, event.stageY, 0);
+			var nRail = oxer(rails.length, "Purple", "red", event.stageX, event.stageY, 4);
 			rails.push( nRail );
 			update = true;
 		}
