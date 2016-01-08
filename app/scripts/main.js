@@ -1,7 +1,7 @@
 'use strict';
 var update = false;
 var canvas, stage;
-var scale, railLength;
+var scale, railLength, spread;
 var template;
 
 var activeRail = -1;
@@ -42,7 +42,7 @@ $(function(){
 			}
 		}
 		else{
-			var nRail = oxer(rails.length, "Purple", "red", event.stageX, event.stageY, 4);
+			var nRail = oxer(rails.length, "Purple", "red", event.stageX, event.stageY, spread);
 			rails.push( nRail );
 			update = true;
 		}
@@ -75,6 +75,7 @@ var setRingParams = function(){
 	}
 
 	railLength = $('#railLength').val();
+	spread = $('#spread').val();
 	var ratio = ringHeight/ringWidth;
 
 	var windowWidth = $('.container').width();
@@ -90,7 +91,7 @@ var setRingParams = function(){
 	var tempRails = [];
 	for ( var i = 0; i < length; i++ ){
 		tempRails.push(rails[i].type(i, "Purple", "red", rails[i].x, rails[i].y,
-			rails[i].spread, rails[i].rotation, false));
+			spread, rails[i].rotation, false));
 		stage.removeChild(rails[i]);
 	}
 	rails = tempRails;
