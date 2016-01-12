@@ -63,9 +63,6 @@ $(function(){
 		var index = $(btn).parent().parent().attr('id');
 
 		var jump = rails[index];
-
-		console.log( typeof jump.x );
-
 		jump.x =  Number($('#xCoordinate'+index).val())*scale;
 		jump.y =  Number($('#yCoordinate'+index).val())*scale;
 		jump.spread =  Number($('#spread'+index).val());
