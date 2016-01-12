@@ -50,10 +50,27 @@ $(function(){
 
 	$('#rails').on( 'click', '.delete', function(){
 		var btn = event.target;
-		var index = $(btn).parent().attr('id');
+		var index = $(btn).parent().parent().attr('id');
 
 		stage.removeChild(rails[index]);
 		rails.splice( index, 1 );
+		activeRail = -1;
+		update = true;
+	});
+
+	$('#rails').on( 'click', '.update', function(){
+		var btn = event.target;
+		var index = $(btn).parent().parent().attr('id');
+
+		var jump = rails[index];
+
+		console.log( typeof jump.x );
+
+		jump.x =  Number($('#xCoordinate'+index).val())*scale;
+		jump.y =  Number($('#yCoordinate'+index).val())*scale;
+		jump.spread =  Number($('#spread'+index).val());
+		jump.rotation =  Number($('#angle'+index).val());
+
 		update = true;
 	});
 
@@ -107,6 +124,7 @@ var updateList = function(){
 		data.y = parseFloat(rails[i].y/scale).toFixed(2);
 		data.angle = rails[i].rotation;
 		data.class = activeRail == i ? 'selected' : '';
+		data.spread = rails[i].spread;
 		$('#rails').append(template(data));
 	}
 };

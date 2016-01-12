@@ -86,8 +86,8 @@ var oxer = function(index, color, selectColor, x, y, spread, angle, selected) {
 	container.x = x;
 	container.y = y;
 
-	container.addChild(rectBack);
 	container.addChild(circle);
+	container.addChild(rectBack);
 	container.addChild(rectA);
 	container.addChild(rectB);
 
