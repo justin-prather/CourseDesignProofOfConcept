@@ -120,7 +120,7 @@ var oxer = function(index, color, selectColor, x, y, spread, rLength, angle, sel
 	}
 
 	container.index = index;
-	container.type = 'oxer';
+	container.type = oxer;
 	container.spread = spread;
 	container.rLength = rLength;
 

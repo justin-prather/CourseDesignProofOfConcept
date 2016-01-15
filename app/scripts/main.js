@@ -117,9 +117,10 @@ var setRingParams = function(){
 	var length = rails.length;
 	var tempRails = [];
 	for ( var i = 0; i < length; i++ ){
-		tempRails.push(rails[i].type(i, "Purple", "red", rails[i].x, rails[i].y,
-			spread, railLength, rails[i].rotation, false));
-		stage.removeChild(rails[i]);
+		var jump = rails[i];
+		tempRails.push(jump.type(i, "Purple", "red", jump.x, jump.y,
+			jump.spread, jump.rLength, jump.rotation, false));
+		stage.removeChild(jump);
 	}
 	rails = tempRails;
 	update = true;
