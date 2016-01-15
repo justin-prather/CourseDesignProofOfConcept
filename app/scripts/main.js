@@ -3,6 +3,7 @@ var update = false;
 var canvas, stage;
 var scale, railLength, spread;
 var template;
+var jumpType = 'vertical';
 
 var activeRail = -1;
 
@@ -42,7 +43,7 @@ $(function(){
 			}
 		}
 		else{
-			var nRail = jumps['oxer'](rails.length, "Purple", "red", event.stageX, event.stageY, spread);
+			var nRail = jumps[jumpType](rails.length, "Purple", "red", event.stageX, event.stageY, spread);
 			rails.push( nRail );
 			update = true;
 		}
@@ -71,7 +72,7 @@ $(function(){
 		var jump = rails[index];
 		if( jump.spread != spread  || jump.rLength != rLength){
 			stage.removeChild(jump);
-			jump = jumps['oxer'](rails.length, "Purple", "red", x, y, spread, rLength, rotation, true);
+			jump = jumps[jumpType](rails.length, "Purple", "red", x, y, spread, rLength, rotation, true);
 			rails[index] = jump;
 			activeRail = index;
 		} else{
@@ -84,6 +85,13 @@ $(function(){
 		update = true;
 	});
 
+	$('#jumpTypes').on( 'click', 'a', function(){
+		event.preventDefault();
+		var type = event.target;
+		jumpType = $(type).attr('id');
+		$('#jumpType').text($(type).text());
+	});
+
 	stage.update();
 
 	createjs.Ticker.addEventListener("tick", tick);
@@ -92,6 +100,7 @@ $(function(){
 var setRingParams = function(){
 	var ringWidth = Number($('#widthInput').val());
 	var ringHeight = Number($('#heightInput').val());
+	var oldScale = scale;
 
 	if( ringHeight > ringWidth ){
 		var temp = ringWidth;
@@ -118,7 +127,7 @@ var setRingParams = function(){
 	var tempRails = [];
 	for ( var i = 0; i < length; i++ ){
 		var jump = rails[i];
-		tempRails.push(jumps[jump.type](i, "Purple", "red", jump.x, jump.y,
+		tempRails.push(jumps[jump.type](i, "Purple", "red", jump.x/oldScale*scale, jump.y/oldScale*scale,
 			jump.spread, jump.rLength, jump.rotation, false));
 		stage.removeChild(jump);
 	}

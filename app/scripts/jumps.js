@@ -2,8 +2,8 @@
  	'vertical' : function(index, color, selectColor, x, y, spread, rLength, angle, selected) {
 		angle = typeof angle !== 'undefined'? angle : 0; // default angle if none supplied
 		selected = typeof selected !== 'undefined'? selected : true;
-		spread = typeof spread !== 'undefined'? spread : 0;
-		rLenght = typeof rLength !== 'undefined'? rLength : railLength;
+		spread = 0;
+		rLength = typeof rLength !== 'undefined'? rLength : railLength;
 
 		var rect = new createjs.Shape();
 		var circle = new createjs.Shape();

@@ -22,6 +22,8 @@ li {
 
 .function-wrapper {
   display: inline-block;
+  vertical-align: top;
+  height: 100%;
   padding: 10px;
   text-align: center;
   border: 2px solid #AAAAAA;
