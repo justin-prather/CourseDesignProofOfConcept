@@ -1,131 +1,133 @@
-var vertical = function(index, color, selectColor, x, y, spread, rLength, angle, selected) {
-	angle = typeof angle !== 'undefined'? angle : 0; // default angle if none supplied
-	selected = typeof selected !== 'undefined'? selected : true;
-	spread = typeof spread !== 'undefined'? spread : 0;
-	rLenght = typeof rLength !== 'undefined'? rLength : railLength;
+ var jumps = {
+ 	'vertical' : function(index, color, selectColor, x, y, spread, rLength, angle, selected) {
+		angle = typeof angle !== 'undefined'? angle : 0; // default angle if none supplied
+		selected = typeof selected !== 'undefined'? selected : true;
+		spread = typeof spread !== 'undefined'? spread : 0;
+		rLenght = typeof rLength !== 'undefined'? rLength : railLength;
 
-	var rect = new createjs.Shape();
-	var circle = new createjs.Shape();
-	var container = new createjs.Container();
-	container.mouseChildren = false;
+		var rect = new createjs.Shape();
+		var circle = new createjs.Shape();
+		var container = new createjs.Container();
+		container.mouseChildren = false;
 
-	rect.graphics.beginFill(color).drawRect(0, 0, rLength*scale, 1.5*scale);
-	circle.graphics.beginRadialGradientFill([selectColor, 'rgba(255, 255, 255, 0)'], 
-		[0.9,0.1], 0, 0, 0, 0, 0, rLength*scale*1.2).drawCircle( 0, 0, rLength*scale/2 );
+		rect.graphics.beginFill(color).drawRect(0, 0, rLength*scale, 1.5*scale);
+		circle.graphics.beginRadialGradientFill([selectColor, 'rgba(255, 255, 255, 0)'], 
+			[0.9,0.1], 0, 0, 0, 0, 0, rLength*scale*1.2).drawCircle( 0, 0, rLength*scale/2 );
 
-	circle.alpha = 0.9;
+		circle.alpha = 0.9;
 
-	rect.regX = rLength*scale/2;
-	rect.regY = 1.5*scale/2;
+		rect.regX = rLength*scale/2;
+		rect.regY = 1.5*scale/2;
 
-	container.x = x;
-	container.y = y;
+		container.x = x;
+		container.y = y;
 
-	container.addChild(circle);
-	container.addChild(rect);
+		container.addChild(circle);
+		container.addChild(rect);
 
-	container.rotation = angle;
+		container.rotation = angle;
 
-	container.on("mousedown", function(evt){
-		onContainerMouseDown(evt);
-	});
+		container.on("mousedown", function(evt){
+			onContainerMouseDown(evt);
+		});
 
-	container.on("click", function(evt){
-		onContainerClick(evt);
-	});
+		container.on("click", function(evt){
+			onContainerClick(evt);
+		});
 
-	// the pressmove event is dispatched when the mouse moves after a mousedown on the target until the mouse is released.
-	container.on("pressmove", function (evt) {
-		onContainerPressMove(evt);
-	});
+		// the pressmove event is dispatched when the mouse moves after a mousedown on the target until the mouse is released.
+		container.on("pressmove", function (evt) {
+			onContainerPressMove(evt);
+		});
 
-	stage.addChild(container);
+		stage.addChild(container);
 
-	circle.visible = false; 
-	
-	if ( selected ){
-		activeRail = rails.length;
-		circle.visible = true;
+		circle.visible = false; 
+		
+		if ( selected ){
+			activeRail = rails.length;
+			circle.visible = true;
+		}
+
+		container.index = index;
+		container.type = 'vertical';
+		container.spread = spread;
+		container.rLength = rLength;
+
+		return container;
+	},
+
+	'oxer' : function(index, color, selectColor, x, y, spread, rLength, angle, selected) {
+		angle = typeof angle !== 'undefined'? angle : 0; // default angle if none supplied
+		selected = typeof selected !== 'undefined'? selected : true;
+		rLength = typeof rLength !== 'undefined'? rLength : railLength;
+
+		var rectA = new createjs.Shape();
+		var rectB = new createjs.Shape();
+		var rectBack = new createjs.Shape();
+
+		var circle = new createjs.Shape();
+		var container = new createjs.Container();
+		container.mouseChildren = false;
+
+		rectA.graphics.beginFill(color).drawRect(0, 0, rLength*scale, 1.5*scale);
+		rectB.graphics.beginFill(color).drawRect(0, 0, rLength*scale, 1.5*scale);
+		rectBack.graphics.beginFill('White').drawRect(0, 0, rLength*scale, spread*scale);
+
+		circle.graphics.beginRadialGradientFill([selectColor, 'rgba(255, 255, 255, 0)'], 
+			[0.9,0.1], 0, 0, 0, 0, 0, rLength*scale*1.2).drawCircle( 0, 0, rLength*scale/2*(1+(0.5)*spread/rLength) );
+
+		circle.alpha = 0.9;
+
+		rectA.regX = rLength*scale/2;
+		rectA.regY = (1.5*scale/2)+spread*scale/2;
+
+		rectB.regX = rLength*scale/2;
+		rectB.regY = (1.5*scale/2)-spread*scale/2;
+
+		rectBack.regX = rLength*scale/2;
+		rectBack.regY = spread*scale/2;
+
+		container.x = x;
+		container.y = y;
+
+		container.addChild(circle);
+		container.addChild(rectBack);
+		container.addChild(rectA);
+		container.addChild(rectB);
+
+		container.rotation = angle;
+
+		container.on("mousedown", function(evt){
+			onContainerMouseDown(evt);
+		});
+
+		container.on("click", function(evt){
+			onContainerClick(evt);
+		});
+
+		// the pressmove event is dispatched when the mouse moves after a mousedown on the target until the mouse is released.
+		container.on("pressmove", function (evt) {
+			onContainerPressMove(evt);
+		});
+
+		stage.addChild(container);
+
+		circle.visible = false; 
+		
+		if ( selected ){
+			activeRail = rails.length;
+			circle.visible = true;
+		}
+
+		container.index = index;
+		container.type = 'oxer';
+		container.spread = spread;
+		container.rLength = rLength;
+
+		return container;
 	}
-
-	container.index = index;
-	container.type = 'vertical';
-	container.spread = spread;
-	container.rLength = rLength;
-
-	return container;
-}
-
-var oxer = function(index, color, selectColor, x, y, spread, rLength, angle, selected) {
-	angle = typeof angle !== 'undefined'? angle : 0; // default angle if none supplied
-	selected = typeof selected !== 'undefined'? selected : true;
-	rLength = typeof rLength !== 'undefined'? rLength : railLength;
-
-	var rectA = new createjs.Shape();
-	var rectB = new createjs.Shape();
-	var rectBack = new createjs.Shape();
-
-	var circle = new createjs.Shape();
-	var container = new createjs.Container();
-	container.mouseChildren = false;
-
-	rectA.graphics.beginFill(color).drawRect(0, 0, rLength*scale, 1.5*scale);
-	rectB.graphics.beginFill(color).drawRect(0, 0, rLength*scale, 1.5*scale);
-	rectBack.graphics.beginFill('White').drawRect(0, 0, rLength*scale, spread*scale);
-
-	circle.graphics.beginRadialGradientFill([selectColor, 'rgba(255, 255, 255, 0)'], 
-		[0.9,0.1], 0, 0, 0, 0, 0, rLength*scale*1.2).drawCircle( 0, 0, rLength*scale/2*(1+(0.5)*spread/rLength) );
-
-	circle.alpha = 0.9;
-
-	rectA.regX = rLength*scale/2;
-	rectA.regY = (1.5*scale/2)+spread*scale/2;
-
-	rectB.regX = rLength*scale/2;
-	rectB.regY = (1.5*scale/2)-spread*scale/2;
-
-	rectBack.regX = rLength*scale/2;
-	rectBack.regY = spread*scale/2;
-
-	container.x = x;
-	container.y = y;
-
-	container.addChild(circle);
-	container.addChild(rectBack);
-	container.addChild(rectA);
-	container.addChild(rectB);
-
-	container.rotation = angle;
-
-	container.on("mousedown", function(evt){
-		onContainerMouseDown(evt);
-	});
-
-	container.on("click", function(evt){
-		onContainerClick(evt);
-	});
-
-	// the pressmove event is dispatched when the mouse moves after a mousedown on the target until the mouse is released.
-	container.on("pressmove", function (evt) {
-		onContainerPressMove(evt);
-	});
-
-	stage.addChild(container);
-
-	circle.visible = false; 
-	
-	if ( selected ){
-		activeRail = rails.length;
-		circle.visible = true;
-	}
-
-	container.index = index;
-	container.type = oxer;
-	container.spread = spread;
-	container.rLength = rLength;
-
-	return container;
-}
+};
 
 /*
 	Event Functions for jumps

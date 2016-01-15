@@ -42,7 +42,7 @@ $(function(){
 			}
 		}
 		else{
-			var nRail = oxer(rails.length, "Purple", "red", event.stageX, event.stageY, spread);
+			var nRail = jumps['oxer'](rails.length, "Purple", "red", event.stageX, event.stageY, spread);
 			rails.push( nRail );
 			update = true;
 		}
@@ -71,7 +71,7 @@ $(function(){
 		var jump = rails[index];
 		if( jump.spread != spread  || jump.rLength != rLength){
 			stage.removeChild(jump);
-			jump = oxer(rails.length, "Purple", "red", x, y, spread, rLength, rotation, true);
+			jump = jumps['oxer'](rails.length, "Purple", "red", x, y, spread, rLength, rotation, true);
 			rails[index] = jump;
 			activeRail = index;
 		} else{
@@ -118,7 +118,7 @@ var setRingParams = function(){
 	var tempRails = [];
 	for ( var i = 0; i < length; i++ ){
 		var jump = rails[i];
-		tempRails.push(jump.type(i, "Purple", "red", jump.x, jump.y,
+		tempRails.push(jumps[jump.type](i, "Purple", "red", jump.x, jump.y,
 			jump.spread, jump.rLength, jump.rotation, false));
 		stage.removeChild(jump);
 	}
