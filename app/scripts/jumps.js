@@ -1,20 +1,21 @@
-var vertical = function(index, color, selectColor, x, y, spread, angle, selected) {
+var vertical = function(index, color, selectColor, x, y, spread, rLength, angle, selected) {
 	angle = typeof angle !== 'undefined'? angle : 0; // default angle if none supplied
 	selected = typeof selected !== 'undefined'? selected : true;
 	spread = typeof spread !== 'undefined'? spread : 0;
+	rLenght = typeof rLength !== 'undefined'? rLength : railLength;
 
 	var rect = new createjs.Shape();
 	var circle = new createjs.Shape();
 	var container = new createjs.Container();
 	container.mouseChildren = false;
 
-	rect.graphics.beginFill(color).drawRect(0, 0, railLength*scale, 1.5*scale);
+	rect.graphics.beginFill(color).drawRect(0, 0, rLength*scale, 1.5*scale);
 	circle.graphics.beginRadialGradientFill([selectColor, 'rgba(255, 255, 255, 0)'], 
-		[0.9,0.1], 0, 0, 0, 0, 0, railLength*scale*1.2).drawCircle( 0, 0, railLength*scale/2 );
+		[0.9,0.1], 0, 0, 0, 0, 0, rLength*scale*1.2).drawCircle( 0, 0, rLength*scale/2 );
 
 	circle.alpha = 0.9;
 
-	rect.regX = railLength*scale/2;
+	rect.regX = rLength*scale/2;
 	rect.regY = 1.5*scale/2;
 
 	container.x = x;
@@ -48,15 +49,17 @@ var vertical = function(index, color, selectColor, x, y, spread, angle, selected
 	}
 
 	container.index = index;
-	container.type = vertical;
+	container.type = 'vertical';
 	container.spread = spread;
+	container.rLength = rLength;
 
 	return container;
 }
 
-var oxer = function(index, color, selectColor, x, y, spread, angle, selected) {
+var oxer = function(index, color, selectColor, x, y, spread, rLength, angle, selected) {
 	angle = typeof angle !== 'undefined'? angle : 0; // default angle if none supplied
 	selected = typeof selected !== 'undefined'? selected : true;
+	rLength = typeof rLength !== 'undefined'? rLength : railLength;
 
 	var rectA = new createjs.Shape();
 	var rectB = new createjs.Shape();
@@ -66,22 +69,22 @@ var oxer = function(index, color, selectColor, x, y, spread, angle, selected) {
 	var container = new createjs.Container();
 	container.mouseChildren = false;
 
-	rectA.graphics.beginFill(color).drawRect(0, 0, railLength*scale, 1.5*scale);
-	rectB.graphics.beginFill(color).drawRect(0, 0, railLength*scale, 1.5*scale);
-	rectBack.graphics.beginFill('White').drawRect(0, 0, railLength*scale, spread*scale);
+	rectA.graphics.beginFill(color).drawRect(0, 0, rLength*scale, 1.5*scale);
+	rectB.graphics.beginFill(color).drawRect(0, 0, rLength*scale, 1.5*scale);
+	rectBack.graphics.beginFill('White').drawRect(0, 0, rLength*scale, spread*scale);
 
 	circle.graphics.beginRadialGradientFill([selectColor, 'rgba(255, 255, 255, 0)'], 
-		[0.9,0.1], 0, 0, 0, 0, 0, railLength*scale*1.2).drawCircle( 0, 0, railLength*scale/2*(1+(0.5)*spread/railLength) );
+		[0.9,0.1], 0, 0, 0, 0, 0, rLength*scale*1.2).drawCircle( 0, 0, rLength*scale/2*(1+(0.5)*spread/rLength) );
 
 	circle.alpha = 0.9;
 
-	rectA.regX = railLength*scale/2;
+	rectA.regX = rLength*scale/2;
 	rectA.regY = (1.5*scale/2)+spread*scale/2;
 
-	rectB.regX = railLength*scale/2;
+	rectB.regX = rLength*scale/2;
 	rectB.regY = (1.5*scale/2)-spread*scale/2;
 
-	rectBack.regX = railLength*scale/2;
+	rectBack.regX = rLength*scale/2;
 	rectBack.regY = spread*scale/2;
 
 	container.x = x;
@@ -117,8 +120,9 @@ var oxer = function(index, color, selectColor, x, y, spread, angle, selected) {
 	}
 
 	container.index = index;
-	container.type = oxer;
+	container.type = 'oxer';
 	container.spread = spread;
+	container.rLength = rLength;
 
 	return container;
 }

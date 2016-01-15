@@ -62,11 +62,24 @@ $(function(){
 		var btn = event.target;
 		var index = $(btn).parent().parent().attr('id');
 
+		var x =  Number($('#xCoordinate'+index).val())*scale;
+		var y =  Number($('#yCoordinate'+index).val())*scale;
+		var spread =  Number($('#spread'+index).val());
+		var rotation =  Number($('#angle'+index).val());
+		var rLength =  Number($('#railLength'+index).val());
+
 		var jump = rails[index];
-		jump.x =  Number($('#xCoordinate'+index).val())*scale;
-		jump.y =  Number($('#yCoordinate'+index).val())*scale;
-		jump.spread =  Number($('#spread'+index).val());
-		jump.rotation =  Number($('#angle'+index).val());
+		if( jump.spread != spread  || jump.rLength != rLength){
+			stage.removeChild(jump);
+			jump = oxer(rails.length, "Purple", "red", x, y, spread, rLength, rotation, true);
+			rails[index] = jump;
+			activeRail = index;
+		} else{
+			jump.x =  x;
+			jump.y =  y;
+			jump.spread =  spread;
+			jump.rotation =  rotation;
+		}
 
 		update = true;
 	});
@@ -105,7 +118,7 @@ var setRingParams = function(){
 	var tempRails = [];
 	for ( var i = 0; i < length; i++ ){
 		tempRails.push(rails[i].type(i, "Purple", "red", rails[i].x, rails[i].y,
-			spread, rails[i].rotation, false));
+			spread, railLength, rails[i].rotation, false));
 		stage.removeChild(rails[i]);
 	}
 	rails = tempRails;
@@ -122,6 +135,7 @@ var updateList = function(){
 		data.angle = rails[i].rotation;
 		data.class = activeRail == i ? 'selected' : '';
 		data.spread = rails[i].spread;
+		data.railLength = rails[i].rLength
 		$('#rails').append(template(data));
 	}
 };
