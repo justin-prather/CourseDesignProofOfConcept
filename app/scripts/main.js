@@ -5,7 +5,7 @@ var scale, railLength, spread;
 var template;
 var jumpType = 'vertical';
 
-var activeRail = -1;
+var jumpStack = -1;
 
 
 var rails = [];
@@ -37,8 +37,8 @@ $(function(){
 			setTimeout(function(){ dblClick = false}, 200);
 			
 			if( mode == 0 ){
-				if ( activeRail != -1 ) rails[activeRail].children[0].visible = false;
-				activeRail = -1;
+				if ( jumpStack != -1 ) rails[jumpStack].children[0].visible = false;
+				jumpStack = -1;
 				update = true;
 			}
 		}
@@ -55,7 +55,7 @@ $(function(){
 
 		stage.removeChild(rails[index]);
 		rails.splice( index, 1 );
-		activeRail = -1;
+		jumpStack = -1;
 		update = true;
 	});
 
@@ -74,7 +74,7 @@ $(function(){
 			stage.removeChild(jump);
 			jump = jumps[jumpType](rails.length, "Purple", "red", x, y, spread, rLength, rotation, true);
 			rails[index] = jump;
-			activeRail = index;
+			jumpStack = index;
 		} else{
 			jump.x =  x;
 			jump.y =  y;
@@ -121,7 +121,7 @@ var setRingParams = function(){
 
 	canvas.height = windowWidth*ratio;
 
-	activeRail = -1; 
+	jumpStack = -1; 
 
 	var length = rails.length;
 	var tempRails = [];
@@ -143,7 +143,7 @@ var updateList = function(){
 		data.x = parseFloat(rails[i].x/scale).toFixed(2);
 		data.y = parseFloat(rails[i].y/scale).toFixed(2);
 		data.angle = rails[i].rotation;
-		data.class = activeRail == i ? 'selected' : '';
+		data.class = jumpStack == i ? 'selected' : '';
 		data.spread = rails[i].spread;
 		data.railLength = rails[i].rLength
 		$('#rails').append(template(data));
@@ -152,12 +152,12 @@ var updateList = function(){
 
 var MouseWheelHandler = function(event){
 	var delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
-	if( activeRail != -1 ){
-		var rotation = rails[activeRail].rotation;
+	if( jumpStack != -1 ){
+		var rotation = rails[jumpStack].rotation;
 		rotation += delta;
-		if ( rotation > 180 ) rails[activeRail].rotation = rotation - 180;
-		else if ( rotation < 0 ) rails[activeRail].rotation = rotation + 180;
-		else rails[activeRail].rotation = rotation;
+		if ( rotation > 180 ) rails[jumpStack].rotation = rotation - 180;
+		else if ( rotation < 0 ) rails[jumpStack].rotation = rotation + 180;
+		else rails[jumpStack].rotation = rotation;
 		update = true;
 	}
 	event.preventDefault();

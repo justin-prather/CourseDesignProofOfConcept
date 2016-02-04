@@ -69,6 +69,26 @@
         expect(stack.pop()).to.equal(12);
         expect(stack.length()).to.equal(0);
       })
+
+      it('should have a length of zero', function(){
+        var stack = new Stack();
+        stack.push(12);
+        stack.push(9);
+        stack.push(5);
+        stack.empty();
+        expect(stack.length()).to.equal(0);
+      })
+
+      it('should return true', function(){
+        var stack = new Stack();
+        expect(stack.isEmpty()).to.equal(true);
+      })
+
+      it('should return false', function(){
+        var stack = new Stack();
+        stack.push(1);
+        expect(stack.isEmpty()).to.equal(false);
+      })
     })
   });
 })();
