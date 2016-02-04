@@ -35,4 +35,29 @@
     });
 
   });
+
+  describe('Test the custom stack implementation in stack.js', function() {
+    describe( 'Test adding to the stack', function() {
+      it('should return undefined', function(){
+        var stack = new Stack();
+        expect(stack.pop()).to.equal(undefined);
+      })
+
+      it('should have length 1 and return 7', function(){
+        var stack = new Stack();
+        stack.push(7);
+        expect(stack.length()).to.equal(1);
+        expect(stack.pop()).to.equal(7);
+      })
+
+      it('should have length 2', function(){
+        var stack = new Stack();
+        stack.push(7);
+        stack.push(8);
+        expect(stack.length()).to.equal(2);
+        stack.push(8);
+        expect(stack.length()).to.equal(2);
+      })
+    });
+  });
 })();
