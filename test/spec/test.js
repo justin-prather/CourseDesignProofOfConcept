@@ -58,6 +58,17 @@
         stack.push(8);
         expect(stack.length()).to.equal(2);
       })
+
     });
+
+    describe('Test replace first, empty', function(){
+      it('should return 12', function(){
+        var stack = new Stack();
+        stack.push(7);
+        stack.replaceFirst(12);
+        expect(stack.pop()).to.equal(12);
+        expect(stack.length()).to.equal(0);
+      })
+    })
   });
 })();

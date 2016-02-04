@@ -15,5 +15,13 @@ function Stack(){
 
 	this.length = function(){
 		return this.stack.length;
+	};
+
+	this.replaceFirst = function(obj){
+		this.stack[0] = obj;
+	};
+
+	this.empty = function(){
+		this.stack.splice(0, this.stack.length );
 	}
 };
