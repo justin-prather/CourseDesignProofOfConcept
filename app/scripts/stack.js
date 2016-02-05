@@ -14,7 +14,8 @@ function Stack(){
 	};
 
 	this.peek = function( index ){
-		index = typeof index !== undefined ? index : 0; 
+		var index = typeof index !== undefined ? 0 : index; 
+		return this.stack[index];
 	};
 
 	this.evict = function( obj ){
@@ -37,9 +38,14 @@ function Stack(){
 
 	this.empty = function(){
 		return this.stack.splice(0, this.stack.length );
-	}
+	};
 
 	this.isEmpty = function(){
 		return this.stack.length < 1 ? true : false;
-	}
+	};
+
+	this.contains = function( obj ){
+		var index = $.inArray(obj, this.stack);
+		return index >= 0 ? true : false;
+	};
 };

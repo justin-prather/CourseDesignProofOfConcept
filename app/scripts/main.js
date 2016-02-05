@@ -5,7 +5,7 @@ var scale, railLength, spread;
 var template;
 var jumpType = 'vertical';
 
-var jumpStack = -1;
+var jumpStack = new Stack();
 
 
 var rails = [];
@@ -37,16 +37,16 @@ $(function(){
 			setTimeout(function(){ dblClick = false}, 200);
 			
 			if( mode == 0 ){
-				if ( jumpStack != -1 ) rails[jumpStack].children[0].visible = false;
-				jumpStack = -1;
-				update = true;
+				while ( !jumpStack.isEmpty() ){ 
+					rails[jumpStack.pop()].children[0].visible = false;
+				}
 			}
 		}
 		else{
 			var nRail = jumps[jumpType](rails.length, "Purple", "red", event.stageX, event.stageY, spread);
 			rails.push( nRail );
-			update = true;
 		}
+		update = true;
 	});
 
 	$('#rails').on( 'click', '.delete', function(){
@@ -55,7 +55,7 @@ $(function(){
 
 		stage.removeChild(rails[index]);
 		rails.splice( index, 1 );
-		jumpStack = -1;
+		jumpStack.evict(index);
 		update = true;
 	});
 
@@ -74,7 +74,7 @@ $(function(){
 			stage.removeChild(jump);
 			jump = jumps[jumpType](rails.length, "Purple", "red", x, y, spread, rLength, rotation, true);
 			rails[index] = jump;
-			jumpStack = index;
+			jumpStack.replaceFirst(index);
 		} else{
 			jump.x =  x;
 			jump.y =  y;
@@ -121,7 +121,7 @@ var setRingParams = function(){
 
 	canvas.height = windowWidth*ratio;
 
-	jumpStack = -1; 
+	jumpStack.empty(); 
 
 	var length = rails.length;
 	var tempRails = [];
@@ -143,7 +143,7 @@ var updateList = function(){
 		data.x = parseFloat(rails[i].x/scale).toFixed(2);
 		data.y = parseFloat(rails[i].y/scale).toFixed(2);
 		data.angle = rails[i].rotation;
-		data.class = jumpStack == i ? 'selected' : '';
+		data.class = jumpStack.contains(i) ? 'selected' : '';
 		data.spread = rails[i].spread;
 		data.railLength = rails[i].rLength
 		$('#rails').append(template(data));
@@ -152,12 +152,12 @@ var updateList = function(){
 
 var MouseWheelHandler = function(event){
 	var delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
-	if( jumpStack != -1 ){
-		var rotation = rails[jumpStack].rotation;
+	if( !jumpStack.isEmpty() ){
+		var rotation = rails[jumpStack.peek()].rotation;
 		rotation += delta;
-		if ( rotation > 180 ) rails[jumpStack].rotation = rotation - 180;
-		else if ( rotation < 0 ) rails[jumpStack].rotation = rotation + 180;
-		else rails[jumpStack].rotation = rotation;
+		if ( rotation > 180 ) rails[jumpStack.peek()].rotation = rotation - 180;
+		else if ( rotation < 0 ) rails[jumpStack.peek()].rotation = rotation + 180;
+		else rails[jumpStack.peek()].rotation = rotation;
 		update = true;
 	}
 	event.preventDefault();

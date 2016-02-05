@@ -45,7 +45,7 @@
 		circle.visible = false; 
 		
 		if ( selected ){
-			jumpStack = rails.length;
+			jumpStack.replaceFirst(rails.length);
 			circle.visible = true;
 		}
 
@@ -116,7 +116,7 @@
 		circle.visible = false; 
 		
 		if ( selected ){
-			jumpStack = rails.length;
+			jumpStack.replaceFirst(rails.length);
 			circle.visible = true;
 		}
 
@@ -136,7 +136,7 @@ var onContainerMouseDown = function(evt){
 	console.log("Jump Clicked");
 	evt.target.offset = {x: evt.target.x - evt.stageX, y: evt.target.y - evt.stageY};
 	if( mode == 0 ){ 
-		jumpStack = evt.target.index;
+		jumpStack.replaceFirst(evt.target.index);
 		evt.target.children[0].visible = true;
 		update = true;
 	}
@@ -144,13 +144,13 @@ var onContainerMouseDown = function(evt){
 
 var onContainerClick = function(evt){
 	if( mode == 1 ){
-		if ( jumpStack == -1 ){
-			jumpStack = evt.target.index;
+		if ( jumpStack.isEmpty() ){
+			jumpStack.push(evt.target.index);
 			evt.target.children[0].visible = true;
 			update = true;
 		} else {
-			var startX = rails[jumpStack].x;
-			var startY = rails[jumpStack].y;
+			var startX = rails[jumpStack.peek()].x;
+			var startY = rails[jumpStack.peek()].y;
 			var endX = evt.target.x;
 			var endY = evt.target.y;
 
