@@ -15,7 +15,7 @@ var dblClick = false;
 	0 = normal
 	1 = measure
 */
-var mode = 0;
+var mode = STATE_DEFAULT;
 
 $(function(){
 
@@ -36,7 +36,7 @@ $(function(){
 			dblClick = true;
 			setTimeout(function(){ dblClick = false}, 200);
 			
-			if( mode == 0 ){
+			if( mode == STATE_DEFAULT ){
 				while ( !jumpStack.isEmpty() ){ 
 					rails[jumpStack.pop()].children[0].visible = false;
 				}
@@ -165,12 +165,12 @@ var MouseWheelHandler = function(event){
 };
 
 var measureClick = function(){
-	if ( mode != 1 ){
-		mode = 1;
+	if ( mode != STATE_MEASURE ){
+		mode = STATE_MEASURE;
 		$('#measure').addClass('btn-success');
 		$('#measure').removeClass('btn-default');
 	} else {
-		mode = 0;
+		mode = STATE_DEFAULT;
 		$('#measure').removeClass('btn-success');
 		$('#measure').addClass('btn-default');
 	}

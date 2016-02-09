@@ -135,7 +135,7 @@
 var onContainerMouseDown = function(evt){
 	console.log("Jump Clicked");
 	evt.target.offset = {x: evt.target.x - evt.stageX, y: evt.target.y - evt.stageY};
-	if( mode == 0 ){ 
+	if( mode == STATE_DEFAULT ){ 
 		jumpStack.replaceFirst(evt.target.index);
 		evt.target.children[0].visible = true;
 		update = true;
@@ -143,7 +143,7 @@ var onContainerMouseDown = function(evt){
 }
 
 var onContainerClick = function(evt){
-	if( mode == 1 ){
+	if( mode == STATE_MEASURE ){
 		if ( jumpStack.isEmpty() ){
 			jumpStack.push(evt.target.index);
 			evt.target.children[0].visible = true;

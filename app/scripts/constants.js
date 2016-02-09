@@ -1,0 +1,2 @@
+const STATE_DEFAULT = 0;
+const STATE_MEASURE = 1;
