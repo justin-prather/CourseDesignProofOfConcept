@@ -4,6 +4,7 @@ var canvas, stage;
 var scale, railLength, spread;
 var template;
 var jumpType = 'vertical';
+var measurePath;
 
 var jumpStack = new Stack();
 
@@ -173,6 +174,8 @@ var measureClick = function(){
 		mode = STATE_DEFAULT;
 		$('#measure').removeClass('btn-success');
 		$('#measure').addClass('btn-default');
+		stage.removeChild(measurePath);
+		update = true;
 	}
 }
 

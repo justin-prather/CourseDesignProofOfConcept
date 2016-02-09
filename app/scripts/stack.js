@@ -14,7 +14,7 @@ function Stack(){
 	};
 
 	this.peek = function( index ){
-		var index = typeof index !== undefined ? 0 : index; 
+		var index = typeof index !== 'undefined' ? index : 0; 
 		return this.stack[index];
 	};
 

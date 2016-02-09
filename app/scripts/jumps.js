@@ -133,7 +133,6 @@
 	Event Functions for jumps
 */
 var onContainerMouseDown = function(evt){
-	console.log("Jump Clicked");
 	evt.target.offset = {x: evt.target.x - evt.stageX, y: evt.target.y - evt.stageY};
 	if( mode == STATE_DEFAULT ){ 
 		jumpStack.replaceFirst(evt.target.index);
@@ -144,21 +143,36 @@ var onContainerMouseDown = function(evt){
 
 var onContainerClick = function(evt){
 	if( mode == STATE_MEASURE ){
-		if ( jumpStack.isEmpty() ){
-			jumpStack.push(evt.target.index);
-			evt.target.children[0].visible = true;
-			update = true;
-		} else {
-			var startX = rails[jumpStack.peek()].x;
-			var startY = rails[jumpStack.peek()].y;
-			var endX = evt.target.x;
-			var endY = evt.target.y;
+		
+		jumpStack.push(evt.target.index);
+		evt.target.children[0].visible = true;
 
-			var distance = Math.abs( hypoteneus( endX - startX, endY - startY ) );
+		var distance = 0;
+		var line = new createjs.Shape();
 
-			$('#measurment').text(parseFloat(distance / scale).toFixed(2) + ' Feet' );
-			measureClick();
+		line.graphics.setStrokeStyle(1);
+		line.graphics.beginStroke('Black');
+
+		for( var i = 1; i < jumpStack.length(); i++ ){
+			var startX = rails[jumpStack.peek(i-1)].x;
+			var startY = rails[jumpStack.peek(i-1)].y;
+			var endX = rails[jumpStack.peek(i)].x;
+			var endY = rails[jumpStack.peek(i)].y;
+
+			line.graphics.moveTo(startX, startY);
+			line.graphics.lineTo(endX, endY);
+
+			distance += Math.abs( hypoteneus( endX - startX, endY - startY ) );
 		}
+
+		stage.removeChild(measurePath);
+		line.graphics.endStroke();
+		stage.addChild(line);
+		measurePath = line;
+
+		$('#measurment').text(parseFloat(distance / scale).toFixed(2) + ' Feet' );
+		
+		update = true;
 	}
 }
 
