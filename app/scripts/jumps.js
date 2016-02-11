@@ -173,6 +173,40 @@ var onContainerClick = function(evt){
 		$('#measurment').text(parseFloat(distance / scale).toFixed(2) + ' Feet' );
 		
 		update = true;
+	} else if ( mode == STATE_MEASURE_PATH ){
+		jumpStack.push(evt.target.index);
+		evt.target.children[0].visible = true;
+
+		var distance = 0;
+		var curve = new createjs.Shape();
+
+		curve.graphics.setStrokeStyle(1);
+		curve.graphics.beginStroke('Black');
+
+		if( jumpStack.length() == 2 ){
+			var startX1 = rails[jumpStack.peek(0)].x;
+			var startY1 = rails[jumpStack.peek(0)].y;
+			var endX1 = startX1 + 50*Math.cos(toRadians(rails[jumpStack.peek(0)].rotation + 90));
+			var endY1 = startY1 + 50*Math.sin(toRadians(rails[jumpStack.peek(0)].rotation + 90));
+
+			var startX2 = rails[jumpStack.peek(1)].x;
+			var startY2 = rails[jumpStack.peek(1)].y;
+			var endX2 = startX2 + 50*Math.cos(toRadians(rails[jumpStack.peek(1)].rotation + 90));
+			var endY2 = startY2 + 50*Math.sin(toRadians(rails[jumpStack.peek(1)].rotation + 90));
+
+			var intersect = checkLineIntersection(startX1, startY1, endX1, endY1, startX2, startY2, endX2, endY2);
+
+			curve.graphics.moveTo(startX1, startY1);
+			curve.graphics.quadraticCurveTo(intersect.x, intersect.y, startX2, startY2);
+		}
+
+		stage.removeChild(measureCurve);
+		curve.graphics.endStroke();
+		stage.addChild(curve);
+		measureCurve = curve;
+
+		pathMeasureClick();
+		update = true;
 	}
 }
 

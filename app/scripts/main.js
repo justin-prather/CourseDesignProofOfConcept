@@ -4,7 +4,7 @@ var canvas, stage;
 var scale, railLength, spread;
 var template;
 var jumpType = 'vertical';
-var measurePath;
+var measurePath, measureCurve;
 
 var jumpStack = new Stack();
 
@@ -24,6 +24,7 @@ $(function(){
 
 	$('#submit').click( setRingParams );
 	$('#measure').click( event, measureClick );
+	$('#pathMeasure').click( event, pathMeasureClick );
 	
 	canvas = document.getElementById('demoCanvas');
 	canvas.addEventListener("mousewheel", MouseWheelHandler, false);
@@ -175,6 +176,20 @@ var measureClick = function(){
 		$('#measure').removeClass('btn-success');
 		$('#measure').addClass('btn-default');
 		stage.removeChild(measurePath);
+		update = true;
+	}
+}
+
+var pathMeasureClick = function(){
+	if ( mode != STATE_MEASURE_PATH ){
+		mode = STATE_MEASURE_PATH;
+		$('#pathMeasure').addClass('btn-success');
+		$('#pathMeasure').removeClass('btn-default');
+	} else {
+		mode = STATE_DEFAULT;
+		$('#pathMeasure').removeClass('btn-success');
+		$('#pathMeasure').addClass('btn-default');
+		stage.removeChild(measureCurve);
 		update = true;
 	}
 }
