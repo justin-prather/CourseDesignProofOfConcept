@@ -177,7 +177,7 @@ var onContainerClick = function(evt){
 		jumpStack.push(evt.target.index);
 		evt.target.children[0].visible = true;
 
-		var distance = 0;
+		var length = 0;
 		var curve = new createjs.Shape();
 
 		curve.graphics.setStrokeStyle(1);
@@ -198,6 +198,9 @@ var onContainerClick = function(evt){
 
 			curve.graphics.moveTo(startX1, startY1);
 			curve.graphics.quadraticCurveTo(intersect.x, intersect.y, startX2, startY2);
+
+			length += curveLength( startX1, startY1, intersect.x, intersect.y, startX2, startY2 );
+			console.log( 'Curve Length: ' + length/scale );
 		}
 
 		stage.removeChild(measureCurve);
@@ -205,6 +208,7 @@ var onContainerClick = function(evt){
 		stage.addChild(curve);
 		measureCurve = curve;
 
+		$('#pathMeasurment').text(parseFloat(length / scale).toFixed(2) + ' Feet' );
 		pathMeasureClick();
 		update = true;
 	}

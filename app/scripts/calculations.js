@@ -51,3 +51,42 @@ function checkLineIntersection(line1StartX, line1StartY, line1EndX, line1EndY, l
     // if line1 and line2 are segments, they intersect if both of the above are true
     return result;
 };
+
+var curveLength = function(startX, startY, controlX, controlY, endX, endY){ // straight lines dont work!!
+    var aX, aY, bX, bY;
+    aX = startX - 2*controlX + endX;
+    aY = startY - 2*controlY + endY;
+    bX = 2*controlX - 2*startX;
+    bY = 2*controlY - 2*startY;
+
+    var A = 4*((aX*aX) + (aY*aY));
+    var B = 4*((aX*bX) + (aY*bY));
+    var C = (bX*bX) + (bY*bY);
+
+    var Sabc = 2*Math.sqrt(A+B+C);
+    var A_2 = Math.sqrt(A);
+    var A_32 = 2*A*A_2;
+    var C_2 = 2*Math.sqrt(C);
+    var BA = B/A_2;
+
+    var len = ( A_32*Sabc + A_2*B*(Sabc-C_2) + (4*C*A-B*B)*Math.log( (2*A_2+BA+Sabc)/(BA+C_2) ) )/(4*A_32);
+    console.log( BA+C_2 );
+    return len;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
