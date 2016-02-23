@@ -70,7 +70,7 @@ var curveLength = function(startX, startY, controlX, controlY, endX, endY){ // s
     var BA = B/A_2;
 
     var len = ( A_32*Sabc + A_2*B*(Sabc-C_2) + (4*C*A-B*B)*Math.log( (2*A_2+BA+Sabc)/(BA+C_2) ) )/(4*A_32);
-    console.log( BA+C_2 );
+    // console.log( BA+C_2 );
     return len;
 }
 

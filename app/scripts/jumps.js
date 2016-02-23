@@ -209,7 +209,6 @@ var onContainerClick = function(evt){
 		measureCurve = curve;
 
 		$('#pathMeasurment').text(parseFloat(length / scale).toFixed(2) + ' Feet' );
-		pathMeasureClick();
 		update = true;
 	}
 }
