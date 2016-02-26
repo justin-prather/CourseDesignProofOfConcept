@@ -17,14 +17,16 @@ var dblClick = false;
 	1 = measure
 */
 var mode = STATE_DEFAULT;
+var modifier = false;
+var lastMousePos = {};
 
 $(function(){
 
 	template = Handlebars.compile($('#rails-template').html());
 
 	$('#submit').click( setRingParams );
-	$('#measure').click( event, measureClick );
-	$('#pathMeasure').click( event, pathMeasureClick );
+	$('#measure').click( measureClick );
+	$('#pathMeasure').click( pathMeasureClick );
 	
 	canvas = document.getElementById('demoCanvas');
 	canvas.addEventListener("mousewheel", MouseWheelHandler, false);
@@ -38,10 +40,8 @@ $(function(){
 			dblClick = true;
 			setTimeout(function(){ dblClick = false}, 200);
 			
-			if( mode == STATE_DEFAULT ){
-				while ( !jumpStack.isEmpty() ){ 
-					rails[jumpStack.pop()].children[0].visible = false;
-				}
+			if( mode == STATE_DEFAULT && modifier != true){
+				disselectAll();
 			}
 		}
 		else{
@@ -50,6 +50,9 @@ $(function(){
 		}
 		update = true;
 	});
+
+	window.onkeydown = keydownHandler;
+	window.onkeyup = keyupHandler;
 
 	$('#rails').on( 'click', '.delete', function(){
 		var btn = event.target;
@@ -176,6 +179,7 @@ var measureClick = function(){
 		$('#measure').removeClass('btn-success');
 		$('#measure').addClass('btn-default');
 		stage.removeChild(measurePath);
+		disselectAll();
 		update = true;
 	}
 }
@@ -190,7 +194,14 @@ var pathMeasureClick = function(){
 		$('#pathMeasure').removeClass('btn-success');
 		$('#pathMeasure').addClass('btn-default');
 		stage.removeChild(measureCurve);
+		disselectAll();
 		update = true;
+	}
+}
+
+var disselectAll = function(){
+	while ( !jumpStack.isEmpty() ){ 
+		rails[jumpStack.pop()].children[0].visible = false;
 	}
 }
 

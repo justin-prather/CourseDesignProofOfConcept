@@ -53,6 +53,7 @@
 		container.type = 'vertical';
 		container.spread = spread;
 		container.rLength = rLength;
+		container.offset = {x: 0, y: 0};
 
 		return container;
 	},
@@ -124,6 +125,7 @@
 		container.type = 'oxer';
 		container.spread = spread;
 		container.rLength = rLength;
+		container.offset = {x: 0, y: 0};
 
 		return container;
 	}
@@ -133,9 +135,18 @@
 	Event Functions for jumps
 */
 var onContainerMouseDown = function(evt){
+	lastMousePos = {x: evt.stageX, y: evt.stageY};
 	evt.target.offset = {x: evt.target.x - evt.stageX, y: evt.target.y - evt.stageY};
 	if( mode == STATE_DEFAULT ){ 
-		jumpStack.replaceFirst(evt.target.index);
+		console.log( modifier );
+		if(modifier == true){ 
+			jumpStack.push(evt.target.index);
+			console.log('pushed');
+		}
+		else{ 
+			jumpStack.replaceFirst(evt.target.index);
+			console.log('replaced');
+		}
 		evt.target.children[0].visible = true;
 		update = true;
 	}
@@ -214,9 +225,22 @@ var onContainerClick = function(evt){
 }
 
 var onContainerPressMove = function(evt){
-	evt.target.x = evt.stageX + evt.target.offset.x;
-	evt.target.y = evt.stageY + evt.target.offset.y;
-	// indicate that the stage should be updated on the next tick:
+	// evt.target.x = evt.stageX + evt.target.offset.x;
+	// evt.target.y = evt.stageY + evt.target.offset.y;
+	var deltaX = evt.stageX - lastMousePos.x;
+	var deltaY = evt.stageY - lastMousePos.y;
+
+
+	for( var i = 0; i < jumpStack.length(); i++){
+		var jump = rails[jumpStack.peek(i)];
+		jump.x =  deltaX + jump.x;
+		jump.y = deltaY + jump.y;
+	}
+
+	lastMousePos = {x: evt.stageX, y: evt.stageY};
+
+	// console.log( 'last x: %d last y: %d, new x: %d new y: %d delta x: %d delta y: %d', lastMousePos.x, lastMousePos.y, evt.stageX, evt.stageY, deltaX, deltaY);
+
 	update = true;
 }
 
