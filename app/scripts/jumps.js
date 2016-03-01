@@ -207,6 +207,12 @@ var onContainerClick = function(evt){
 
 			var intersect = checkLineIntersection(startX1, startY1, endX1, endY1, startX2, startY2, endX2, endY2);
 
+			if( !intersect.x || !intersect.y){
+				isStraightLine( rails[jumpStack.peek(0)], rails[jumpStack.peek(1)] );
+				update = true;
+				return;
+			}
+
 			curve.graphics.moveTo(startX1, startY1);
 			curve.graphics.quadraticCurveTo(intersect.x, intersect.y, startX2, startY2);
 
@@ -225,20 +231,22 @@ var onContainerClick = function(evt){
 }
 
 var onContainerPressMove = function(evt){
-	// evt.target.x = evt.stageX + evt.target.offset.x;
-	// evt.target.y = evt.stageY + evt.target.offset.y;
-	var deltaX = evt.stageX - lastMousePos.x;
-	var deltaY = evt.stageY - lastMousePos.y;
-
-
-	for( var i = 0; i < jumpStack.length(); i++){
-		var jump = rails[jumpStack.peek(i)];
-		jump.x =  deltaX + jump.x;
-		jump.y = deltaY + jump.y;
+	if(!modifier){
+		evt.target.x = evt.stageX + evt.target.offset.x;
+		evt.target.y = evt.stageY + evt.target.offset.y;
+	} else{
+		var deltaX = evt.stageX - lastMousePos.x;
+		var deltaY = evt.stageY - lastMousePos.y;
+	
+	
+		for( var i = 0; i < jumpStack.length(); i++){
+			var jump = rails[jumpStack.peek(i)];
+			jump.x =  deltaX + jump.x;
+			jump.y = deltaY + jump.y;
+		}
+	
+		lastMousePos = {x: evt.stageX, y: evt.stageY};
 	}
-
-	lastMousePos = {x: evt.stageX, y: evt.stageY};
-
 	// console.log( 'last x: %d last y: %d, new x: %d new y: %d delta x: %d delta y: %d', lastMousePos.x, lastMousePos.y, evt.stageX, evt.stageY, deltaX, deltaY);
 
 	update = true;

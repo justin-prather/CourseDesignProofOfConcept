@@ -18,13 +18,14 @@ function checkLineIntersection(line1StartX, line1StartY, line1EndX, line1EndY, l
     var denominator, a, b, numerator1, numerator2, result = {
         x: null,
         y: null,
-        onLine1: false,
-        onLine2: false
     };
     denominator = ((line2EndY - line2StartY) * (line1EndX - line1StartX)) - ((line2EndX - line2StartX) * (line1EndY - line1StartY));
-    if (denominator == 0) {
+    // console.log('Denominator: ' + denominator);
+    if (denominator < 0.0000001 && denominator > -0.0000001) {
+        // console.log( 'no intersection ');
         return result;
     }
+    // console.log( 'intersection' );
     a = line1StartY - line2StartY;
     b = line1StartX - line2StartX;
     numerator1 = ((line2EndX - line2StartX) * a) - ((line2EndY - line2StartY) * b);
@@ -40,15 +41,7 @@ function checkLineIntersection(line1StartX, line1StartY, line1EndX, line1EndY, l
         x = line2StartX + (b * (line2EndX - line2StartX));
         y = line2StartX + (b * (line2EndY - line2StartY));
         */
-    // if line1 is a segment and line2 is infinite, they intersect if:
-    if (a > 0 && a < 1) {
-        result.onLine1 = true;
-    }
-    // if line2 is a segment and line1 is infinite, they intersect if:
-    if (b > 0 && b < 1) {
-        result.onLine2 = true;
-    }
-    // if line1 and line2 are segments, they intersect if both of the above are true
+    
     return result;
 };
 
@@ -74,6 +67,13 @@ var curveLength = function(startX, startY, controlX, controlY, endX, endY){ // s
     return len;
 }
 
+var isStraightLine = function( jumpOne, jumpTwo ){
+    if( jumpOne.rotation == jumpTwo.rotation ){
+        console.log('same angle');
+
+        var distance = hypoteneus( jumpOne.x-jumpTwo.x, jumpOne.y-jumpTwo.y );
+    }
+}
 
 
 
