@@ -44,7 +44,7 @@ $(function(){
 				disselectAll();
 			}
 		}
-		else if( mode == STATE_DEFAULT ){
+		else if( mode == STATE_DEFAULT && modifier != true ){
 			var nRail = jumps[jumpType](rails.length, "Purple", "red", event.stageX, event.stageY, spread);
 			rails.push( nRail );
 		}

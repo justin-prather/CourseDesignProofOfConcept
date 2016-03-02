@@ -48,4 +48,10 @@ function Stack(){
 		var index = $.inArray(obj, this.stack);
 		return index >= 0 ? true : false;
 	};
+
+	this.sortDescending = function(){
+		this.stack.sort(function(a,b) {
+		    return b - a;
+		});
+	}
 };

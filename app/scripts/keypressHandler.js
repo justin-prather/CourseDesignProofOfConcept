@@ -1,5 +1,4 @@
 var keydownHandler = function(evt){
-	console.log(evt.which);
 
 	switch( evt.which ){
 		case 27: // escape
@@ -14,20 +13,31 @@ var keydownHandler = function(evt){
 			disselectAll();
 			update = true;
 			break;
-		case 16: 
+		case 16: // shift
 			console.log( 'shift' );
 			modifier = true;
 			break;
-		default: return;
+		case 8: // delete
+			console.log( 'delete' );
+			jumpStack.sortDescending();
+			for( var i = 0; i < jumpStack.length(); i++ ){
+				var index = jumpStack.peek(i);
+				stage.removeChild(rails[index]);
+				rails.splice( index, 1 );
+			}
+			jumpStack.empty();
+			update = true;
+			break;
+		default: 
+			console.log(evt.which);
+			return;
 	}
 };
 
 var keyupHandler = function(evt){
-	console.log(evt.which);
-
 	switch( evt.which ){
 		case 16: 
-			console.log( 'shift' );
+			// console.log( 'shift' );
 			modifier = false;
 			break;
 		default: return;
