@@ -194,30 +194,34 @@ var onContainerClick = function(evt){
 		curve.graphics.setStrokeStyle(1);
 		curve.graphics.beginStroke('Black');
 
-		if( jumpStack.length() == 2 ){
-			var startX1 = rails[jumpStack.peek(0)].x;
-			var startY1 = rails[jumpStack.peek(0)].y;
-			var endX1 = startX1 + 50*Math.cos(toRadians(rails[jumpStack.peek(0)].rotation + 90));
-			var endY1 = startY1 + 50*Math.sin(toRadians(rails[jumpStack.peek(0)].rotation + 90));
+		for( var i = 1; i < jumpStack.length(); i++ ){
+			var startX1 = rails[jumpStack.peek(i-1)].x;
+			var startY1 = rails[jumpStack.peek(i-1)].y;
+			var endX1 = startX1 + 50*Math.cos(toRadians(rails[jumpStack.peek(i-1)].rotation + 90));
+			var endY1 = startY1 + 50*Math.sin(toRadians(rails[jumpStack.peek(i-1)].rotation + 90));
 
-			var startX2 = rails[jumpStack.peek(1)].x;
-			var startY2 = rails[jumpStack.peek(1)].y;
-			var endX2 = startX2 + 50*Math.cos(toRadians(rails[jumpStack.peek(1)].rotation + 90));
-			var endY2 = startY2 + 50*Math.sin(toRadians(rails[jumpStack.peek(1)].rotation + 90));
+			var startX2 = rails[jumpStack.peek(i)].x;
+			var startY2 = rails[jumpStack.peek(i)].y;
+			var endX2 = startX2 + 50*Math.cos(toRadians(rails[jumpStack.peek(i)].rotation + 90));
+			var endY2 = startY2 + 50*Math.sin(toRadians(rails[jumpStack.peek(i)].rotation + 90));
 
 			var intersect = checkLineIntersection(startX1, startY1, endX1, endY1, startX2, startY2, endX2, endY2);
 
-			if( !intersect.x || !intersect.y){
-				isStraightLine( rails[jumpStack.peek(0)], rails[jumpStack.peek(1)] );
-				update = true;
-				return;
-			}
-
 			curve.graphics.moveTo(startX1, startY1);
-			curve.graphics.quadraticCurveTo(intersect.x, intersect.y, startX2, startY2);
 
-			length += curveLength( startX1, startY1, intersect.x, intersect.y, startX2, startY2 );
-			console.log( 'Curve Length: ' + length/scale );
+			if( !intersect.x || !intersect.y){
+				var distance = isStraightLine( rails[jumpStack.peek(i-1)], rails[jumpStack.peek(i)] );
+				if ( distance ){
+					curve.graphics.lineTo(startX2, startY2);
+					length += distance;
+				}
+				update = true;
+			} else{
+				curve.graphics.quadraticCurveTo(intersect.x, intersect.y, startX2, startY2);
+
+				length += curveLength( startX1, startY1, intersect.x, intersect.y, startX2, startY2 );
+				console.log( 'Curve Length: ' + length/scale );
+			}
 		}
 
 		stage.removeChild(measureCurve);
