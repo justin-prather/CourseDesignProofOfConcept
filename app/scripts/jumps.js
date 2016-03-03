@@ -215,14 +215,14 @@ var onContainerClick = function(evt){
 				var distance = isStraightLine( rails[jumpStack.peek(i-1)], rails[jumpStack.peek(i)] );
 				if ( distance ){
 					curve.graphics.lineTo(startX2, startY2);
-					length += distance - (rails[jumpStack.peek(i-1)].spread*scale / 2) - (rails[jumpStack.peek(i)].spread*scale / 2);
+					length += distance /*- (rails[jumpStack.peek(i-1)].spread*scale / 2) - (rails[jumpStack.peek(i)].spread*scale / 2)*/;
 				}
 			} else{
 				curve.graphics.quadraticCurveTo(intersect.x, intersect.y, startX2, startY2);
 
-				length += curveLength( startX1, startY1, intersect.x, intersect.y, startX2, startY2 ) - 
+				length += curveLength( startX1, startY1, intersect.x, intersect.y, startX2, startY2 )/* - 
 					(rails[jumpStack.peek(i-1)].spread*scale / 2) - (rails[jumpStack.peek(i)].spread*scale / 2);
-				console.log( 'Curve Length: ' + length/scale );
+				console.log( 'Curve Length: ' + length/scale )*/;
 			}
 		}
 
