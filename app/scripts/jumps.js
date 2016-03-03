@@ -54,6 +54,7 @@
 		container.spread = spread;
 		container.rLength = rLength;
 		container.offset = {x: 0, y: 0};
+		container.select = circle;
 
 		return container;
 	},
@@ -92,8 +93,8 @@
 		container.x = x;
 		container.y = y;
 
-		container.addChild(circle);
 		container.addChild(rectBack);
+		container.addChild(circle);
 		container.addChild(rectA);
 		container.addChild(rectB);
 
@@ -126,6 +127,7 @@
 		container.spread = spread;
 		container.rLength = rLength;
 		container.offset = {x: 0, y: 0};
+		container.select = circle;
 
 		return container;
 	}
@@ -147,7 +149,7 @@ var onContainerMouseDown = function(evt){
 			jumpStack.replaceFirst(evt.target.index);
 			console.log('replaced');
 		}
-		evt.target.children[0].visible = true;
+		evt.target.select.visible = true;
 		update = true;
 	}
 }
@@ -156,7 +158,7 @@ var onContainerClick = function(evt){
 	if( mode == STATE_MEASURE ){
 		
 		jumpStack.push(evt.target.index);
-		evt.target.children[0].visible = true;
+		evt.target.select.visible = true;
 
 		var distance = 0;
 		var line = new createjs.Shape();
@@ -186,7 +188,7 @@ var onContainerClick = function(evt){
 		update = true;
 	} else if ( mode == STATE_MEASURE_PATH ){
 		jumpStack.push(evt.target.index);
-		evt.target.children[0].visible = true;
+		evt.target.select.visible = true;
 
 		var length = 0;
 		var curve = new createjs.Shape();
@@ -213,13 +215,13 @@ var onContainerClick = function(evt){
 				var distance = isStraightLine( rails[jumpStack.peek(i-1)], rails[jumpStack.peek(i)] );
 				if ( distance ){
 					curve.graphics.lineTo(startX2, startY2);
-					length += distance;
+					length += distance - (rails[jumpStack.peek(i-1)].spread*scale / 2) - (rails[jumpStack.peek(i)].spread*scale / 2);
 				}
-				update = true;
 			} else{
 				curve.graphics.quadraticCurveTo(intersect.x, intersect.y, startX2, startY2);
 
-				length += curveLength( startX1, startY1, intersect.x, intersect.y, startX2, startY2 );
+				length += curveLength( startX1, startY1, intersect.x, intersect.y, startX2, startY2 ) - 
+					(rails[jumpStack.peek(i-1)].spread*scale / 2) - (rails[jumpStack.peek(i)].spread*scale / 2);
 				console.log( 'Curve Length: ' + length/scale );
 			}
 		}

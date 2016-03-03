@@ -201,7 +201,7 @@ var pathMeasureClick = function(){
 
 var disselectAll = function(){
 	while ( !jumpStack.isEmpty() ){ 
-		rails[jumpStack.pop()].children[0].visible = false;
+		rails[jumpStack.pop()].select.visible = false;
 	}
 }
 

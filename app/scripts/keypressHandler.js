@@ -19,14 +19,16 @@ var keydownHandler = function(evt){
 			break;
 		case 8: // delete
 			console.log( 'delete' );
-			jumpStack.sortDescending();
-			for( var i = 0; i < jumpStack.length(); i++ ){
-				var index = jumpStack.peek(i);
-				stage.removeChild(rails[index]);
-				rails.splice( index, 1 );
+			if( $(':focus').length < 1 ){
+				jumpStack.sortDescending();
+				for( var i = 0; i < jumpStack.length(); i++ ){
+					var index = jumpStack.peek(i);
+					stage.removeChild(rails[index]);
+					rails.splice( index, 1 );
+				}
+				jumpStack.empty();
+				update = true;
 			}
-			jumpStack.empty();
-			update = true;
 			break;
 		default: 
 			console.log(evt.which);
