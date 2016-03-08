@@ -15,7 +15,7 @@ var keydownHandler = function(evt){
 			break;
 		case 16: // shift
 			console.log( 'shift' );
-			modifier = true;
+			modifier.shift = true;
 			break;
 		case 8: // delete
 			console.log( 'delete' );
@@ -30,6 +30,8 @@ var keydownHandler = function(evt){
 				update = true;
 			}
 			break;
+		case 83: // s
+			modifier.snap = !modifier.snap;
 		default: 
 			console.log(evt.which);
 			return;

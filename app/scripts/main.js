@@ -1,7 +1,7 @@
 'use strict';
 var update = false;
 var canvas, stage;
-var scale, railLength, spread;
+var scale, railLength, spread, snap;
 var template;
 var jumpType = 'vertical';
 var measurePath, measureCurve;
@@ -17,7 +17,7 @@ var dblClick = false;
 	1 = measure
 */
 var mode = STATE_DEFAULT;
-var modifier = false;
+var modifier = { shift: false, snap: false};
 var lastMousePos = {};
 
 $(function(){
@@ -27,6 +27,7 @@ $(function(){
 	$('#submit').click( setRingParams );
 	$('#measure').click( measureClick );
 	$('#pathMeasure').click( pathMeasureClick );
+	$('#save').click( saveClick );
 	
 	canvas = document.getElementById('demoCanvas');
 	canvas.addEventListener("mousewheel", MouseWheelHandler, false);
@@ -40,11 +41,11 @@ $(function(){
 			dblClick = true;
 			setTimeout(function(){ dblClick = false}, 200);
 			
-			if( mode == STATE_DEFAULT && modifier != true){
+			if( mode == STATE_DEFAULT && modifier.shift != true){
 				disselectAll();
 			}
 		}
-		else if( mode == STATE_DEFAULT && modifier != true ){
+		else if( mode == STATE_DEFAULT && modifier.shift != true ){
 			var nRail = jumps[jumpType](rails.length, "Purple", "red", event.stageX, event.stageY, spread);
 			rails.push( nRail );
 		}
@@ -116,7 +117,8 @@ var setRingParams = function(){
 	}
 
 	railLength = $('#railLength').val();
-	spread = $('#spread').val();
+	spread = Number($('#spread').val());
+	snap = Number($('#snap').val());
 	var ratio = ringHeight/ringWidth;
 
 	var windowWidth = $('.container').width();
@@ -197,6 +199,10 @@ var pathMeasureClick = function(){
 		disselectAll();
 		update = true;
 	}
+}
+
+var saveClick = function(){
+	$('#save').attr('href', canvas.toDataURL('image/png'));
 }
 
 var disselectAll = function(){

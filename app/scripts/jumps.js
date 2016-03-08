@@ -140,8 +140,8 @@ var onContainerMouseDown = function(evt){
 	lastMousePos = {x: evt.stageX, y: evt.stageY};
 	evt.target.offset = {x: evt.target.x - evt.stageX, y: evt.target.y - evt.stageY};
 	if( mode == STATE_DEFAULT ){ 
-		console.log( modifier );
-		if(modifier == true){ 
+		console.log( modifier.shift );
+		if(modifier.shift == true){ 
 			jumpStack.push(evt.target.index);
 			console.log('pushed');
 		}
@@ -237,9 +237,15 @@ var onContainerClick = function(evt){
 }
 
 var onContainerPressMove = function(evt){
-	if(!modifier){
-		evt.target.x = evt.stageX + evt.target.offset.x;
-		evt.target.y = evt.stageY + evt.target.offset.y;
+	if(!modifier.shift){
+		var x = evt.stageX;
+		var y = evt.stageY;
+		if( modifier.snap ){
+			x = roundToN( x, snap*scale );
+			y = roundToN( y, snap*scale );
+		}
+		evt.target.x = x + evt.target.offset.x;
+		evt.target.y = y + evt.target.offset.y;
 	} else{
 		var deltaX = evt.stageX - lastMousePos.x;
 		var deltaY = evt.stageY - lastMousePos.y;

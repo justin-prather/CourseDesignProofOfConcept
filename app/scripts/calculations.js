@@ -123,6 +123,14 @@ var toFiveDecimals = function( num ){
     return Number( parseFloat(num).toFixed(5) );
 }
 
+var roundToN = function( num, round ){
+    var resto = num%round;
+    if (resto <= (round/2)) { 
+        return num-resto;
+    } else {
+        return num+round-resto;
+    }
+}
 
 
 

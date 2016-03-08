@@ -112,6 +112,10 @@
               <label for="spread">Spread</label>
               <input type="number" class="form-control" id="spread" value="4">
             </div>
+            <div class="form-group">
+              <label for="snap">Snap Distance</label>
+              <input type="number" class="form-control" id="snap" value="5">
+            </div>
             <button type="submit" id="submit" class="btn btn-default">Submit</button>
         </div>
       </div>
@@ -141,6 +145,9 @@
           </div>
           <div id="jumpType">Vertical</div>
         </div>
+        <!-- <div class="function-wrapper">
+          <a class="btn btn-default" href="#" download="my_course.png" id="save">Save</a>
+        </div> -->
       </div>
 
       <ol id="rails">
@@ -179,8 +186,19 @@
       </div>
 
     </div>
-
-    <img src="" alt="" id="myImage">
+    
+    <div id="print" class="hide">
+      <img src="" alt="" class="course-png">
+      <table class="table table-bordered">
+        <tr>
+          <th>X Position</th>
+          <th>Y Position</th>
+          <th>Spread</th>
+          <th>Rail Length</th>
+          <th>Angle</th>
+        </tr>
+      </table>
+    </div>
 
 
     <!-- build:js(.) scripts/vendor.js -->
@@ -203,6 +221,8 @@
     </script>
 
         <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
+        <script src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
+        <script src="bower_components/jspdf/dist/jspdf.min.js"></script>
         <!-- build:js(.) scripts/plugins.js -->
         <script src="bower_components/bootstrap/js/affix.js"></script>
         <script src="bower_components/bootstrap/js/alert.js"></script>
