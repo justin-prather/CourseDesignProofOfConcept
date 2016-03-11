@@ -78,6 +78,9 @@
                     <strong>Delete</strong>: Deletes the currently selected jump. If multiple jumps have been selected using shift, they will all be deleted.
                   </li>
                   <li>
+                    <strong>S</strong>: Tapping s toggles snapping. When snapping is enabled, dragging jumps will move them in increments of the snap distance, set in settings.
+                  </li>
+                  <li>
                     More coming soon...
                   </li>
                 </ul>
@@ -94,6 +97,7 @@
         Settings
       </button>
       <button class="btn btn-primary" id="help" data-toggle="modal" data-target="#helpModal">Help!</button>
+      <div id="snapping-indicator" class="btn btn-success hide">Snapping On</div>
       <div class="collapse" id="settingsCollapse">
         <div class="well">
           <div class="form-group">
@@ -223,6 +227,7 @@
         <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
         <script src="http://html2canvas.hertzen.com/build/html2canvas.js"></script>
         <script src="bower_components/jspdf/dist/jspdf.min.js"></script>
+        <script src="bower_components/snackbarjs/dist/snackbar.min.js"></script>
         <!-- build:js(.) scripts/plugins.js -->
         <script src="bower_components/bootstrap/js/affix.js"></script>
         <script src="bower_components/bootstrap/js/alert.js"></script>

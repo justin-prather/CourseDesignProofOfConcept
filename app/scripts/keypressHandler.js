@@ -32,6 +32,8 @@ var keydownHandler = function(evt){
 			break;
 		case 83: // s
 			modifier.snap = !modifier.snap;
+			$('#snapping-indicator').toggleClass('hide');
+			break;
 		default: 
 			console.log(evt.which);
 			return;
