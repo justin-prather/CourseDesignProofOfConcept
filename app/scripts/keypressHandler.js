@@ -17,9 +17,10 @@ var keydownHandler = function(evt){
 			console.log( 'shift' );
 			modifier.shift = true;
 			break;
-		case 8: // delete
-			console.log( 'delete' );
+		case 8: // backspace
+			console.log( 'backspace' );
 			if( $(':focus').length < 1 ){
+				evt.preventDefault();
 				jumpStack.sortDescending();
 				for( var i = 0; i < jumpStack.length(); i++ ){
 					var index = jumpStack.peek(i);

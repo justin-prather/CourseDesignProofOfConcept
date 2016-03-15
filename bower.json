@@ -3,6 +3,11 @@
   "private": true,
   "dependencies": {
     "bootstrap": "~3.2.0",
-    "handlebars": "~4.0.5"
+    "handlebars": "~4.0.5",
+    "jspdf": "1.0.272",
+    "EaselJS": "easeljs#^0.8.2",
+    "html2canvas": "^0.4.1",
+    "snackbarjs": "^1.1.0",
+    "jquery": "^2.2.1"
   }
 }
