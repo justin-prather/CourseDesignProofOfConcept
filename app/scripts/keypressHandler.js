@@ -34,7 +34,10 @@ var keydownHandler = function(evt){
 			modifier.snap = !modifier.snap;
 			$('#snapping-indicator').toggleClass('hide');
 			break;
-		default: 
+		case 65: // a
+			modifier.alignJumps = true;
+			break;
+		default:
 			console.log(evt.which);
 			return;
 	}
@@ -42,9 +45,12 @@ var keydownHandler = function(evt){
 
 var keyupHandler = function(evt){
 	switch( evt.which ){
-		case 16: 
+		case 16:
 			// console.log( 'shift' );
 			modifier = false;
+			break;
+		case 65: // a
+			modifier.alignJumps = false;
 			break;
 		default: return;
 	}

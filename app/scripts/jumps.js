@@ -11,7 +11,7 @@
 		container.mouseChildren = false;
 
 		rect.graphics.beginFill(color).drawRect(0, 0, rLength*scale, 1.5*scale);
-		circle.graphics.beginRadialGradientFill([selectColor, 'rgba(255, 255, 255, 0)'], 
+		circle.graphics.beginRadialGradientFill([selectColor, 'rgba(255, 255, 255, 0)'],
 			[0.9,0.1], 0, 0, 0, 0, 0, rLength*scale*1.2).drawCircle( 0, 0, rLength*scale/2 );
 
 		circle.alpha = 0.9;
@@ -42,8 +42,8 @@
 
 		stage.addChild(container);
 
-		circle.visible = false; 
-		
+		circle.visible = false;
+
 		if ( selected ){
 			jumpStack.replaceFirst(rails.length);
 			circle.visible = true;
@@ -76,7 +76,7 @@
 		rectB.graphics.beginFill(color).drawRect(0, 0, rLength*scale, 1.5*scale);
 		rectBack.graphics.beginFill('White').drawRect(0, 0, rLength*scale, spread*scale);
 
-		circle.graphics.beginRadialGradientFill([selectColor, 'rgba(255, 255, 255, 0)'], 
+		circle.graphics.beginRadialGradientFill([selectColor, 'rgba(255, 255, 255, 0)'],
 			[0.9,0.1], 0, 0, 0, 0, 0, rLength*scale*1.2).drawCircle( 0, 0, rLength*scale/2*(1+(0.5)*spread/rLength) );
 
 		circle.alpha = 0.9;
@@ -115,8 +115,8 @@
 
 		stage.addChild(container);
 
-		circle.visible = false; 
-		
+		circle.visible = false;
+
 		if ( selected ){
 			jumpStack.replaceFirst(rails.length);
 			circle.visible = true;
@@ -139,13 +139,16 @@
 var onContainerMouseDown = function(evt){
 	lastMousePos = {x: evt.stageX, y: evt.stageY};
 	evt.target.offset = {x: evt.target.x - evt.stageX, y: evt.target.y - evt.stageY};
-	if( mode == STATE_DEFAULT ){ 
-		console.log( modifier.shift );
-		if(modifier.shift == true){ 
+	if( mode == STATE_DEFAULT ){
+		// console.log( modifier.shift );
+		if(modifier.shift == true){
 			jumpStack.push(evt.target.index);
 			console.log('pushed');
-		}
-		else{ 
+		} else if( modifier.alignJumps == true ){
+      if( jumpStack.length() <= 1 ) jumpStack.push(evt.target.index);
+      else rails[jumpStack.replaceLast(evt.target.index)].select.visible = false;
+      console.log( jumpStack );
+    } else{
 			jumpStack.replaceFirst(evt.target.index);
 			console.log('replaced');
 		}
@@ -156,7 +159,7 @@ var onContainerMouseDown = function(evt){
 
 var onContainerClick = function(evt){
 	if( mode == STATE_MEASURE ){
-		
+
 		jumpStack.push(evt.target.index);
 		evt.target.select.visible = true;
 
@@ -184,7 +187,7 @@ var onContainerClick = function(evt){
 		measurePath = line;
 
 		$('#measurment').text(parseFloat(distance / scale).toFixed(2) + ' Feet' );
-		
+
 		update = true;
 	} else if ( mode == STATE_MEASURE_PATH ){
 		jumpStack.push(evt.target.index);
@@ -220,7 +223,7 @@ var onContainerClick = function(evt){
 			} else{
 				curve.graphics.quadraticCurveTo(intersect.x, intersect.y, startX2, startY2);
 
-				length += curveLength( startX1, startY1, intersect.x, intersect.y, startX2, startY2 )/* - 
+				length += curveLength( startX1, startY1, intersect.x, intersect.y, startX2, startY2 )/* -
 					(rails[jumpStack.peek(i-1)].spread*scale / 2) - (rails[jumpStack.peek(i)].spread*scale / 2);
 				console.log( 'Curve Length: ' + length/scale )*/;
 			}
@@ -237,7 +240,19 @@ var onContainerClick = function(evt){
 }
 
 var onContainerPressMove = function(evt){
-	if(!modifier.shift){
+  if( modifier.shift ){
+		var deltaX = evt.stageX - lastMousePos.x;
+		var deltaY = evt.stageY - lastMousePos.y;
+
+
+		for( var i = 0; i < jumpStack.length(); i++){
+			var jump = rails[jumpStack.peek(i)];
+			jump.x =  deltaX + jump.x;
+			jump.y = deltaY + jump.y;
+		}
+
+		lastMousePos = {x: evt.stageX, y: evt.stageY};
+	} else{
 		var x = evt.stageX;
 		var y = evt.stageY;
 		if( modifier.snap ){
@@ -246,42 +261,8 @@ var onContainerPressMove = function(evt){
 		}
 		evt.target.x = x + evt.target.offset.x;
 		evt.target.y = y + evt.target.offset.y;
-	} else{
-		var deltaX = evt.stageX - lastMousePos.x;
-		var deltaY = evt.stageY - lastMousePos.y;
-	
-	
-		for( var i = 0; i < jumpStack.length(); i++){
-			var jump = rails[jumpStack.peek(i)];
-			jump.x =  deltaX + jump.x;
-			jump.y = deltaY + jump.y;
-		}
-	
-		lastMousePos = {x: evt.stageX, y: evt.stageY};
 	}
 	// console.log( 'last x: %d last y: %d, new x: %d new y: %d delta x: %d delta y: %d', lastMousePos.x, lastMousePos.y, evt.stageX, evt.stageY, deltaX, deltaY);
 
 	update = true;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

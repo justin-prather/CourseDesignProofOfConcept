@@ -14,7 +14,7 @@ function Stack(){
 	};
 
 	this.peek = function( index ){
-		var index = typeof index !== 'undefined' ? index : 0; 
+		var index = typeof index !== 'undefined' ? index : 0;
 		return this.stack[index];
 	};
 
@@ -33,6 +33,12 @@ function Stack(){
 	this.replaceFirst = function(obj){
 		temp = this.stack[0];
 		this.stack[0] = obj;
+		return temp;
+	};
+
+	this.replaceLast = function(obj){
+		temp = this.stack[this.stack.length - 1];
+		this.stack[this.stack.length - 1] = obj;
 		return temp;
 	};
 

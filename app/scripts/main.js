@@ -17,7 +17,7 @@ var dblClick = false;
 	1 = measure
 */
 var mode = STATE_DEFAULT;
-var modifier = { shift: false, snap: false};
+var modifier = { shift: false, snap: false, alignJumps: false };
 var lastMousePos = {};
 
 $(function(){
@@ -28,7 +28,7 @@ $(function(){
 	$('#measure').click( measureClick );
 	$('#pathMeasure').click( pathMeasureClick );
 	$('#save').click( saveClick );
-	
+
 	canvas = document.getElementById('demoCanvas');
 	canvas.addEventListener("mousewheel", MouseWheelHandler, false);
 	setRingParams();
@@ -40,8 +40,8 @@ $(function(){
 		if( !dblClick ){
 			dblClick = true;
 			setTimeout(function(){ dblClick = false}, 200);
-			
-			if( mode == STATE_DEFAULT && modifier.shift != true){
+
+			if( mode == STATE_DEFAULT && modifier.shift != true && modifier.alignJumps != true){
 				disselectAll();
 			}
 		}
@@ -128,7 +128,7 @@ var setRingParams = function(){
 
 	canvas.height = windowWidth*ratio;
 
-	jumpStack.empty(); 
+	jumpStack.empty();
 
 	var length = rails.length;
 	var tempRails = [];
@@ -206,7 +206,7 @@ var saveClick = function(){
 }
 
 var disselectAll = function(){
-	while ( !jumpStack.isEmpty() ){ 
+	while ( !jumpStack.isEmpty() ){
 		rails[jumpStack.pop()].select.visible = false;
 	}
 }
