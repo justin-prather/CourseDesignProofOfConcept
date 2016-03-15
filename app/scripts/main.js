@@ -1,7 +1,7 @@
 'use strict';
 var update = false;
 var canvas, stage;
-var scale, railLength, spread, snap;
+var scale, railLength, spread, snap, gridSpacing;
 var template;
 var jumpType = 'vertical';
 var measurePath, measureCurve;
@@ -31,10 +31,11 @@ $(function(){
 
 	canvas = document.getElementById('demoCanvas');
 	canvas.addEventListener("mousewheel", MouseWheelHandler, false);
-	setRingParams();
 
 	stage = new createjs.Stage(canvas);
 	createjs.Touch.enable(stage);
+
+	setRingParams();
 
 	stage.on("stagemousedown", function(event){
 		if( !dblClick ){
@@ -119,6 +120,7 @@ var setRingParams = function(){
 	railLength = $('#railLength').val();
 	spread = Number($('#spread').val());
 	snap = Number($('#snap').val());
+	gridSpacing = Number($('#grid').val());
 	var ratio = ringHeight/ringWidth;
 
 	var windowWidth = $('.container').width();
@@ -127,6 +129,8 @@ var setRingParams = function(){
 	scale = windowWidth/ringWidth;
 
 	canvas.height = windowWidth*ratio;
+
+	drawGrid( gridSpacing * scale );
 
 	jumpStack.empty();
 
@@ -209,6 +213,26 @@ var disselectAll = function(){
 	while ( !jumpStack.isEmpty() ){
 		rails[jumpStack.pop()].select.visible = false;
 	}
+}
+
+var drawGrid = function( spacing ){
+	var grid = new createjs.Shape();
+
+	grid.graphics.setStrokeStyle(1);
+	grid.graphics.beginStroke('#CCCCCC');
+
+	for( var i = 0; i < canvas.height; i += spacing ){
+		grid.graphics.moveTo(0,i);
+		grid.graphics.lineTo(canvas.width, i);
+	}
+
+	for( var i = 0; i < canvas.width; i += spacing ){
+		grid.graphics.moveTo(i,0);
+		grid.graphics.lineTo(i, canvas.height);
+	}
+
+	grid.graphics.endStroke();
+	stage.addChild(grid);
 }
 
 function tick(event) {

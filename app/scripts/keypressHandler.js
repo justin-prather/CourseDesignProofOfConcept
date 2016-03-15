@@ -36,6 +36,7 @@ var keydownHandler = function(evt){
 			break;
 		case 65: // a
 			modifier.alignJumps = true;
+			$('#align-indicator').removeClass('hide');
 			break;
 		default:
 			console.log(evt.which);
@@ -47,10 +48,11 @@ var keyupHandler = function(evt){
 	switch( evt.which ){
 		case 16:
 			// console.log( 'shift' );
-			modifier = false;
+			modifier.shift = false;
 			break;
 		case 65: // a
 			modifier.alignJumps = false;
+			$('#align-indicator').addClass('hide');
 			break;
 		default: return;
 	}

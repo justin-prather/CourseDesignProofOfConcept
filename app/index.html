@@ -39,7 +39,7 @@
 
               <h4>How do I use it?</h4>
               <p>
-                To start, click the <strong>Settings</strong> button, and enter the dimensions of your ring, rail length, and width for spread elements (oxers only at this point). 
+                To start, click the <strong>Settings</strong> button, and enter the dimensions of your ring, rail length, and width for spread elements (oxers only at this point).
                 <br>
                 Once the ring is set up, there are a few <strong>basic operations</strong>:
                 <ul>
@@ -92,12 +92,13 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-          
+
       <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#settingsCollapse" aria-expanded="false" aria-controls="settingsCollapse">
         Settings
       </button>
       <button class="btn btn-primary" id="help" data-toggle="modal" data-target="#helpModal">Help!</button>
       <div id="snapping-indicator" class="btn btn-success hide">Snapping On</div>
+      <div id="align-indicator" class="btn btn-success hide">Align</div>
       <div class="collapse" id="settingsCollapse">
         <div class="well">
           <div class="form-group">
@@ -119,6 +120,10 @@
             <div class="form-group">
               <label for="snap">Snap Distance</label>
               <input type="number" class="form-control" id="snap" value="5">
+            </div>
+            <div class="form-group">
+              <label for="grid">Guideline Spacing</label>
+              <input type="number" class="form-control" id="grid" value="5">
             </div>
             <button type="submit" id="submit" class="btn btn-default">Submit</button>
         </div>
@@ -182,7 +187,7 @@
               <button class="btn btn-danger delete">Delete</button>
             </div>
           </li>
-        </template>       
+        </template>
       </ol>
 
       <div class="footer">
@@ -190,7 +195,7 @@
       </div>
 
     </div>
-    
+
     <div id="print" class="hide">
       <img src="" alt="" class="course-png">
       <table class="table table-bordered">
