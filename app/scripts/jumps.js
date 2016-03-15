@@ -147,7 +147,7 @@ var onContainerMouseDown = function(evt){
 		} else if( modifier.alignJumps == true ){
       if( jumpStack.length() <= 1 ) jumpStack.push(evt.target.index);
       else rails[jumpStack.replaceLast(evt.target.index)].select.visible = false;
-      console.log( jumpStack );
+      // console.log( jumpStack );
     } else{
 			jumpStack.replaceFirst(evt.target.index);
 			console.log('replaced');
@@ -252,7 +252,22 @@ var onContainerPressMove = function(evt){
 		}
 
 		lastMousePos = {x: evt.stageX, y: evt.stageY};
-	} else{
+	} else if(modifier.alignJumps){
+    if( jumpStack.length() == 2 ){
+      var jumpStatic = rails[jumpStack.peek(0)];
+      var jumpDynamic = rails[jumpStack.peek(1)];
+
+      var distance = hypoteneus( jumpStatic.x - evt.stageX, jumpStatic.y - evt.stageY );
+
+      var angleRads = toRadians( jumpStatic.rotation + 90 );
+      var vOffset = distance * Math.sin( angleRads );
+      var hOffset = distance * Math.cos( angleRads );
+
+      jumpDynamic.x = jumpStatic.x + hOffset;
+      jumpDynamic.y = jumpStatic.y + vOffset;
+      jumpDynamic.rotation = jumpStatic.rotation;
+    }
+  } else{
 		var x = evt.stageX;
 		var y = evt.stageY;
 		if( modifier.snap ){
