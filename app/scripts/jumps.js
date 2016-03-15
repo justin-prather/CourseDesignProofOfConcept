@@ -263,8 +263,17 @@ var onContainerPressMove = function(evt){
       var vOffset = distance * Math.sin( angleRads );
       var hOffset = distance * Math.cos( angleRads );
 
-      jumpDynamic.x = jumpStatic.x + hOffset;
-      jumpDynamic.y = jumpStatic.y + vOffset;
+      var addDistance = hypoteneus( jumpStatic.x + hOffset - evt.stageX, jumpStatic.y + vOffset - evt.stageY );
+      var subDistance = hypoteneus( jumpStatic.x - hOffset - evt.stageX, jumpStatic.y - vOffset - evt.stageY );
+
+      if( addDistance <= subDistance ){
+        jumpDynamic.x = jumpStatic.x + hOffset;
+        jumpDynamic.y = jumpStatic.y + vOffset;
+      } else {
+        jumpDynamic.x = jumpStatic.x - hOffset;
+        jumpDynamic.y = jumpStatic.y - vOffset;
+      }
+
       jumpDynamic.rotation = jumpStatic.rotation;
     }
   } else{
