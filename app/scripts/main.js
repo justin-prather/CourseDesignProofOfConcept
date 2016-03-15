@@ -4,7 +4,7 @@ var canvas, stage;
 var scale, railLength, spread, snap, gridSpacing;
 var template;
 var jumpType = 'vertical';
-var measurePath, measureCurve;
+var measurePath, measureCurve, gridLines;
 
 var jumpStack = new Stack();
 
@@ -232,7 +232,9 @@ var drawGrid = function( spacing ){
 	}
 
 	grid.graphics.endStroke();
+	stage.removeChild(gridLines);
 	stage.addChild(grid);
+	gridLines = grid;
 }
 
 function tick(event) {
