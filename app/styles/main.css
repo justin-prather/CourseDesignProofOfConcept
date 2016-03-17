@@ -47,7 +47,7 @@ li {
   width: 0;
 }
 .open {
-  width: 60%;
+  width: 90%;
 }
 
 .quick_buttons {
@@ -55,7 +55,7 @@ li {
   top: 0;
   right: -50px;
   bottom: 0;
-  background-color: #FF00EA;
+  background-color: #783982;
   width: 50px;
   text-align: center;
 }
@@ -71,6 +71,11 @@ li {
 
 #rails li {
   padding: 5px;
+}
+
+#rails .buttons {
+  text-align: center;
+  vertical-align: middle;
 }
 
 .selected {

@@ -29,8 +29,24 @@ $(function(){
 	$('#pathMeasure').click( pathMeasureClick );
 	$('#save').click( saveClick );
 	$('#toggle-left-sidebar').click( function(){
+		disselectAll();
+		updateList();
 		$('#toggle-left-sidebar span').toggleClass('glyphicon-chevron-right').toggleClass('glyphicon-chevron-left');
 		$('#sidebar_left').toggleClass('open').toggleClass('closed');
+		$('.jump-info-row *').on('focus', function(evt){
+			var parent = $(evt.target).closest('.jump-info-row');
+			parent.addClass('selected');
+			console.log(Number(parent.attr('id')))
+			jumpStack.replaceFirst(Number(parent.attr('id')));
+			rails[Number(parent.attr('id'))].select.visible = true;
+			update = true;
+		}).on('blur', function(evt){
+			var parent = $(evt.target).closest('.jump-info-row');
+			parent.removeClass('selected');
+			jumpStack.evict(Number(parent.attr('id')));
+			rails[Number(parent.attr('id'))].select.visible = false;
+			update = true;
+		});
 	});
 
 	canvas = document.getElementById('demoCanvas');
@@ -60,13 +76,14 @@ $(function(){
 	window.onkeydown = keydownHandler;
 	window.onkeyup = keyupHandler;
 
-	$('#rails').on( 'click', '.delete', function(){
-		var btn = event.target;
-		var index = $(btn).parent().parent().attr('id');
-
-		stage.removeChild(rails[index]);
-		rails.splice( index, 1 );
-		jumpStack.evict(index);
+	$('#delete').on( 'click', function(){
+		jumpStack.sortDescending();
+		for( var i = 0; i < jumpStack.length(); i++ ){
+			var index = jumpStack.peek(i);
+			stage.removeChild(rails[index]);
+			rails.splice( index, 1 );
+		}
+		jumpStack.empty();
 		update = true;
 	});
 
@@ -161,6 +178,7 @@ var updateList = function(){
 		data.class = jumpStack.contains(i) ? 'selected' : '';
 		data.spread = rails[i].spread;
 		data.railLength = rails[i].rLength
+		data.humanIndex = i+1;
 		$('#rails').append(template(data));
 	}
 };
@@ -217,6 +235,7 @@ var disselectAll = function(){
 	while ( !jumpStack.isEmpty() ){
 		rails[jumpStack.pop()].select.visible = false;
 	}
+	update = true;
 }
 
 var drawGrid = function( spacing ){
@@ -245,7 +264,6 @@ function tick(event) {
 	// this set makes it so the stage only re-renders when an event handler indicates a change has happened.
 	if (update) {
 		update = false; // only update once
-		updateList();
 		stage.update(event);
 	}
 }

@@ -161,40 +161,47 @@
       </div>
 
       <div id="sidebar_left" class="closed">
-        <ol id="rails" class="">
+        <div id="rails" class="container-fluid">
           <template id="rails-template">
-            <li id="{{index}}" class="{{class}}">
+            <div id="{{index}}" class="{{class}} row jump-info-row">
               <div class="form-inline">
-                <div class="form-group">
+                <div class="col-md-1">
+                  <h3>{{humanIndex}}</h3>
+                </div>
+                <div class="form-group col-md-2">
                   <label for="xCoordinate{{index}}">X:</label>
                   <input type="number" class="form-control" id="xCoordinate{{index}}" value="{{x}}">
                 </div>
-                <div class="form-group">
+                <div class="form-group col-md-2">
                   <label for="yCoordinate{{index}}">Y:</label>
                   <input type="number" class="form-control" id="yCoordinate{{index}}" value="{{y}}">
                 </div>
-                <div class="form-group">
+                <div class="form-group col-md-2">
                   <label for="spread{{index}}">Spread:</label>
                   <input type="number" class="form-control" id="spread{{index}}" value="{{spread}}">
                 </div>
-                <div class="form-group">
+                <div class="form-group col-md-2">
                   <label for="railLength{{index}}">Rail Length:</label>
                   <input type="number" class="form-control" id="railLength{{index}}" value="{{railLength}}">
                 </div>
-                <div class="form-group">
+                <div class="form-group col-md-2">
                   <label for="angle{{index}}">Angle:</label>
                   <input type="number" class="form-control" id="angle{{index}}" value="{{angle}}">
                 </div>
+                <div class="col-md-1 buttons">
                 <button class="btn btn-primary update">Update</button>
-                <button class="btn btn-danger delete">Delete</button>
+                </div>
               </div>
-            </li>
+            </div>
           </template>
-        </ol>
+        </div>
 
         <div class="quick_buttons">
           <button id="toggle-left-sidebar" class="btn btn-default">
             <span class="glyphicon glyphicon-chevron-right"></span>
+          </button>
+          <button id="delete" class="btn btn-default">
+            <span class="glyphicon glyphicon-trash"></span>
           </button>
         </div>
       </div>
