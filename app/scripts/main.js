@@ -89,7 +89,7 @@ $(function(){
 
 	$('#rails').on( 'click', '.update', function(){
 		var btn = event.target;
-		var index = $(btn).parent().parent().attr('id');
+		var index = $(btn).closest('.jump-info-row').attr('id');
 
 		var x =  Number($('#xCoordinate'+index).val())*scale;
 		var y =  Number($('#yCoordinate'+index).val())*scale;
