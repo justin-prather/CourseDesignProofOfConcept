@@ -33,6 +33,42 @@ li {
   padding-top: 10px;
 }
 
+#sidebar_left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(200, 200, 200, 0.5);
+  display: inline-block;
+  height: 100%;
+}
+
+.closed {
+  width: 0;
+}
+.open {
+  width: 60%;
+}
+
+.quick_buttons {
+  position: absolute;
+  top: 0;
+  right: -50px;
+  bottom: 0;
+  background-color: #FF00EA;
+  width: 50px;
+  text-align: center;
+}
+
+.quick_buttons .btn {
+  margin-top: 10px;
+}
+
+#rails {
+  overflow: hidden;
+  height: 100%;
+}
+
 #rails li {
   padding: 5px;
 }

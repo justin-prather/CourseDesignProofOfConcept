@@ -160,36 +160,44 @@
         </div> -->
       </div>
 
-      <ol id="rails">
-        <template id="rails-template">
-          <li id="{{index}}" class="{{class}}">
-            <div class="form-inline">
-              <div class="form-group">
-                <label for="xCoordinate{{index}}">X:</label>
-                <input type="number" class="form-control" id="xCoordinate{{index}}" value="{{x}}">
+      <div id="sidebar_left" class="closed">
+        <ol id="rails" class="">
+          <template id="rails-template">
+            <li id="{{index}}" class="{{class}}">
+              <div class="form-inline">
+                <div class="form-group">
+                  <label for="xCoordinate{{index}}">X:</label>
+                  <input type="number" class="form-control" id="xCoordinate{{index}}" value="{{x}}">
+                </div>
+                <div class="form-group">
+                  <label for="yCoordinate{{index}}">Y:</label>
+                  <input type="number" class="form-control" id="yCoordinate{{index}}" value="{{y}}">
+                </div>
+                <div class="form-group">
+                  <label for="spread{{index}}">Spread:</label>
+                  <input type="number" class="form-control" id="spread{{index}}" value="{{spread}}">
+                </div>
+                <div class="form-group">
+                  <label for="railLength{{index}}">Rail Length:</label>
+                  <input type="number" class="form-control" id="railLength{{index}}" value="{{railLength}}">
+                </div>
+                <div class="form-group">
+                  <label for="angle{{index}}">Angle:</label>
+                  <input type="number" class="form-control" id="angle{{index}}" value="{{angle}}">
+                </div>
+                <button class="btn btn-primary update">Update</button>
+                <button class="btn btn-danger delete">Delete</button>
               </div>
-              <div class="form-group">
-                <label for="yCoordinate{{index}}">Y:</label>
-                <input type="number" class="form-control" id="yCoordinate{{index}}" value="{{y}}">
-              </div>
-              <div class="form-group">
-                <label for="spread{{index}}">Spread:</label>
-                <input type="number" class="form-control" id="spread{{index}}" value="{{spread}}">
-              </div>
-              <div class="form-group">
-                <label for="railLength{{index}}">Rail Length:</label>
-                <input type="number" class="form-control" id="railLength{{index}}" value="{{railLength}}">
-              </div>
-              <div class="form-group">
-                <label for="angle{{index}}">Angle:</label>
-                <input type="number" class="form-control" id="angle{{index}}" value="{{angle}}">
-              </div>
-              <button class="btn btn-primary update">Update</button>
-              <button class="btn btn-danger delete">Delete</button>
-            </div>
-          </li>
-        </template>
-      </ol>
+            </li>
+          </template>
+        </ol>
+
+        <div class="quick_buttons">
+          <button id="toggle-left-sidebar" class="btn btn-default">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+          </button>
+        </div>
+      </div>
 
       <div class="footer">
         <p><span class="glyphicon glyphicon-hand-right"></span> Justin Prather 2015 - justinprather@mac.com</p>

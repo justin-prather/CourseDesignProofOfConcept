@@ -28,6 +28,10 @@ $(function(){
 	$('#measure').click( measureClick );
 	$('#pathMeasure').click( pathMeasureClick );
 	$('#save').click( saveClick );
+	$('#toggle-left-sidebar').click( function(){
+		$('#toggle-left-sidebar span').toggleClass('glyphicon-chevron-right').toggleClass('glyphicon-chevron-left');
+		$('#sidebar_left').toggleClass('open').toggleClass('closed');
+	});
 
 	canvas = document.getElementById('demoCanvas');
 	canvas.addEventListener("mousewheel", MouseWheelHandler, false);
