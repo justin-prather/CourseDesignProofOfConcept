@@ -39,6 +39,20 @@ var keydownHandler = function(evt){
 			modifier.alignJumps = true;
 			$('#align-indicator').removeClass('hide');
 			break;
+		case 86: // v
+			jumpType = 'vertical';
+			$('#jumpType').text('Vertical');
+			break;
+		case 79: // o
+			jumpType = 'oxer';
+			$('#jumpType').text('Oxer');
+			break;
+		case 77: // m
+		  measureClick();
+			break;
+		case 80: // p
+			pathMeasureClick();
+			break;
 		default:
 			console.log(evt.which);
 			return;

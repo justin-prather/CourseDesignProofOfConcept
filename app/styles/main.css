@@ -38,7 +38,7 @@ li {
   top: 0;
   left: 0;
   bottom: 0;
-  background-color: rgba(200, 200, 200, 0.5);
+  background-color: rgba(200, 200, 200, 0.75);
   display: inline-block;
   height: 100%;
 }

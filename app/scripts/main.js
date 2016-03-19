@@ -228,6 +228,7 @@ var pathMeasureClick = function(){
 }
 
 var saveClick = function(){
+	disselectAll();
 	$('#save').attr('href', canvas.toDataURL('image/png'));
 }
 
@@ -255,6 +256,13 @@ var drawGrid = function( spacing ){
 	}
 
 	grid.graphics.endStroke();
+
+	grid.graphics.beginStroke('#000000');
+	grid.graphics.moveTo( 0, 0 );
+	grid.graphics.lineTo(canvas.width, 0);
+	grid.graphics.lineTo(canvas.width, canvas.height);
+	grid.graphics.lineTo(0, canvas.height);
+	grid.graphics.lineTo(0, 0);
 	stage.removeChild(gridLines);
 	stage.addChild(grid);
 	gridLines = grid;
