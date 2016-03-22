@@ -53,6 +53,26 @@ var keydownHandler = function(evt){
 		case 80: // p
 			pathMeasureClick();
 			break;
+		case 221: // ]
+			if( !jumpStack.isEmpty() ){
+				var rotation = rails[jumpStack.peek()].rotation;
+				rotation += 5;
+				if ( rotation > 180 ) rails[jumpStack.peek()].rotation = rotation - 180;
+				else if ( rotation < 0 ) rails[jumpStack.peek()].rotation = rotation + 180;
+				else rails[jumpStack.peek()].rotation = rotation;
+				update = true;
+			}
+			break;
+		case 219: // [
+			if( !jumpStack.isEmpty() ){
+				var rotation = rails[jumpStack.peek()].rotation;
+				rotation -= 5;
+				if ( rotation > 180 ) rails[jumpStack.peek()].rotation = rotation - 180;
+				else if ( rotation < 0 ) rails[jumpStack.peek()].rotation = rotation + 180;
+				else rails[jumpStack.peek()].rotation = rotation;
+				update = true;
+			}
+			break;
 		default:
 			console.log(evt.which);
 			return;

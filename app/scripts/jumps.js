@@ -244,6 +244,10 @@ var onContainerPressMove = function(evt){
 		var deltaX = evt.stageX - lastMousePos.x;
 		var deltaY = evt.stageY - lastMousePos.y;
 
+    if( modifier.snap ){
+      deltaX = roundToN( deltaX, snap*scale );
+      deltaY = roundToN( deltaY, snap*scale );
+    }
 
 		for( var i = 0; i < jumpStack.length(); i++){
 			var jump = rails[jumpStack.peek(i)];
@@ -251,13 +255,19 @@ var onContainerPressMove = function(evt){
 			jump.y = deltaY + jump.y;
 		}
 
-		lastMousePos = {x: evt.stageX, y: evt.stageY};
+    lastMousePos.x = lastMousePos.x + deltaX;
+    lastMousePos.y = lastMousePos.y + deltaY;
+
 	} else if(modifier.alignJumps){
     if( jumpStack.length() == 2 ){
       var jumpStatic = rails[jumpStack.peek(0)];
       var jumpDynamic = rails[jumpStack.peek(1)];
 
       var distance = hypoteneus( jumpStatic.x - evt.stageX, jumpStatic.y - evt.stageY );
+
+      if( modifier.snap ){
+        distance = roundToN( distance, snap*scale );
+      }
 
       var angleRads = toRadians( jumpStatic.rotation + 90 );
       var vOffset = distance * Math.sin( angleRads );
@@ -277,14 +287,14 @@ var onContainerPressMove = function(evt){
       jumpDynamic.rotation = jumpStatic.rotation;
     }
   } else{
-		var x = evt.stageX;
-		var y = evt.stageY;
+		var x = evt.stageX + evt.target.offset.x;
+		var y = evt.stageY + evt.target.offset.y;
 		if( modifier.snap ){
 			x = roundToN( x, snap*scale );
 			y = roundToN( y, snap*scale );
 		}
-		evt.target.x = x + evt.target.offset.x;
-		evt.target.y = y + evt.target.offset.y;
+		evt.target.x = x;
+		evt.target.y = y;
 	}
 	// console.log( 'last x: %d last y: %d, new x: %d new y: %d delta x: %d delta y: %d', lastMousePos.x, lastMousePos.y, evt.stageX, evt.stageY, deltaX, deltaY);
 

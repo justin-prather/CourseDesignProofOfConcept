@@ -11,6 +11,7 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="bower_components/snackbarjs/dist/snackbar.min.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -50,7 +51,7 @@
                 </ul>
                 A list of jumps can be found at the bottom of the page, and from there the precise position, angle, spread, and rail length of each jump can be found. These values can be changed for each jump, and the course map is refreshed when update is clicked. The jump can also be deleted from here. The x and y values given locate the <strong>center of each jump</strong>, relative to the top left corner.
                 <br><br>
-                There are also several <strong>tools</strong> shown below the ring. They include:
+                There are also several <strong>tools</strong> shown on the left side of the page. They include:
                 <br><br>
                 <ul>
                   <li>
@@ -61,6 +62,9 @@
                   </li>
                   <li>
                     <strong>Jump Type</strong>: select they type of jump that will be placed on next double click. Currently only supports oxers and verticals, but more are coming!
+                  </li>
+                  <li>
+                    <strong>Save</strong>: save a copy of the course to your computer. For now, this is just a png image, but eventually will be a nicely formatted pdf.
                   </li>
                   <li>
                     More coming soon...
@@ -80,6 +84,15 @@
                   </li>
                   <li>
                     <strong>S</strong>: Tapping s toggles snapping. When snapping is enabled, dragging jumps will move them in increments of the snap distance, set in settings.
+                  </li>
+                  <li>
+                    <strong>A</strong>: Holding a will allign 2 jumps. Select the stationary jump first, and then the jump to move second while holding a. The distance is set by how far the mouse is from the stationary jump.
+                  </li>
+                  <li>
+                    <strong>[</strong>: Tapping [ rotates the currently selected jump 5 degrees counter-clockwise.
+                  </li>
+                  <li>
+                    <strong>]</strong>: Tapping ] rotates the currently selected jump 5 degrees clockwise.
                   </li>
                   <li>
                     More coming soon...
@@ -183,22 +196,28 @@
         </div>
 
         <div class="quick_buttons">
-          <button id="toggle-left-sidebar" class="btn btn-default">
+          <button id="toggle-left-sidebar" class="btn btn-default" data-toggle="tooltip" title="View Jump List" data-placement="right" data-delay='{"show":"500", "hide":"300"}'>
             <span class="glyphicon glyphicon-chevron-right"></span>
           </button>
-          <button class="btn btn-default" id="measure">Measure</button>
-          <button class="btn btn-default" id="pathMeasure">Path Measure</button>
-          <div class="btn-group">
+          <button class="btn btn-default" id="measure" data-toggle="tooltip" title="Straight Line Measure" data-placement="right" data-delay='{"show":"500", "hide":"300"}'>
+            <span class="fa fa-arrows-h"></span>
+          </button>
+          <button class="btn btn-default" id="pathMeasure" data-toggle="tooltip" title="Path Measure" data-placement="right" data-delay='{"show":"500", "hide":"300"}'>
+            <span class="fa fa-chain"></span>
+          </button>
+          <div class="btn-group" data-toggle="tooltip" title="Select Jump Type" data-placement="right" data-delay='{"show":"500", "hide":"300"}'>
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span id="jumpType">Vertical</span> <span class="caret"></span>
+              <span id="jumpType" class="">Vertical</Verti></span> <span class="caret"></span>
             </button>
             <ul id="jumpTypes" class="dropdown-menu">
               <li><a id="vertical" href="#">Vertical</a></li>
               <li><a id="oxer" href="#">Oxer</a></li>
             </ul>
           </div>
-          <a class="btn btn-default" href="#" download="my_course.png" id="save">Save</a>
-          <button id="delete" class="btn btn-default">
+          <a class="btn btn-default" href="#" download="my_course.png" id="save" data-toggle="tooltip" title="Download Course Image" data-placement="right" data-delay='{"show":"500", "hide":"300"}'>
+            <span class="glyphicon glyphicon-save"></span>
+          </a>
+          <button id="delete" class="btn btn-default" data-toggle="tooltip" title="Delete Selected" data-placement="right" data-delay='{"show":"500", "hide":"300"}'>
             <span class="glyphicon glyphicon-trash"></span>
           </button>
         </div>

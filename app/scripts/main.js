@@ -23,6 +23,7 @@ var lastMousePos = {};
 $(function(){
 
 	template = Handlebars.compile($('#rails-template').html());
+	$('[data-toggle="tooltip"]').tooltip();
 
 	$('#submit').click( setRingParams );
 	$('#measure').click( measureClick );
@@ -241,6 +242,10 @@ var disselectAll = function(){
 
 var drawGrid = function( spacing ){
 	var grid = new createjs.Shape();
+
+	var rect = new createjs.Shape();
+	rect.graphics.beginFill('#FFFFFF').drawRect(0, 0, canvas.width, canvas.height);
+	stage.addChild(rect);
 
 	grid.graphics.setStrokeStyle(1);
 	grid.graphics.beginStroke('#CCCCCC');
