@@ -234,7 +234,7 @@ var onContainerClick = function(evt){
 		stage.addChild(curve);
 		measureCurve = curve;
 
-		$('#pathMeasurment').text(parseFloat(length / scale).toFixed(2) + ' Feet' );
+		$('#measurment').text(parseFloat(length / scale).toFixed(2) + ' Feet' );
 		update = true;
 	}
 }

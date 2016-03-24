@@ -24,13 +24,13 @@ li {
   display: inline-block;
   vertical-align: top;
   height: 100%;
-  padding: 10px;
+  padding: 5px;
   text-align: center;
   border: 2px solid #AAAAAA;
 }
 
 .function-wrapper div {
-  padding-top: 10px;
+  /*padding-top: 10px;*/
 }
 
 #sidebar_left {
