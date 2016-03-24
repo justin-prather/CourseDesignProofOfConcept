@@ -296,6 +296,10 @@ var onContainerPressMove = function(evt){
 		evt.target.x = x;
 		evt.target.y = y;
 	}
+
+  if ( mode == STATE_MEASURE || mode == STATE_MEASURE_PATH ){
+    onContainerClick(evt);
+  }
 	// console.log( 'last x: %d last y: %d, new x: %d new y: %d delta x: %d delta y: %d', lastMousePos.x, lastMousePos.y, evt.stageX, evt.stageY, deltaX, deltaY);
 
 	update = true;
