@@ -118,7 +118,8 @@ $(function(){
 		event.preventDefault();
 		var type = event.target;
 		jumpType = $(type).attr('id');
-		$('#jumpType').text($(type).text());
+		$('#jumpType').removeClass();
+		$('#jumpType').addClass(jumpType);
 	});
 
 	stage.update();
@@ -170,7 +171,7 @@ var setRingParams = function(){
 
 var updateList = function(){
 	var data = {};
-	$('#rails').empty();
+	// $('#rails').empty();
 	for ( var i = 0; i < rails.length; i++ ){
 		data.index = i;
 		data.x = parseFloat(rails[i].x/scale).toFixed(2);
