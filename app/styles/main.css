@@ -60,6 +60,20 @@ li {
   text-align: center;
 }
 
+.vertical {
+  background: url(/images/vertical.svg) no-repeat top left;
+  background-size: contain;
+  width: 14px;
+  height: 15px;
+}
+
+.oxer {
+  background: url(/images/oxer.svg) no-repeat top left;
+  background-size: contain;
+  width: 14px;
+  height: 15px;
+}
+
 .quick_buttons .btn {
   margin-top: 10px;
 }
