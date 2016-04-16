@@ -146,7 +146,7 @@ var setRingParams = function(){
 	gridSpacing = Number($('#grid').val());
 	var ratio = ringHeight/ringWidth;
 
-	var windowWidth = $('.container').width();
+	var windowWidth = $('.container-fluid').width();
 	canvas.width = windowWidth;
 
 	scale = windowWidth/ringWidth;
@@ -171,7 +171,7 @@ var setRingParams = function(){
 
 var updateList = function(){
 	var data = {};
-	// $('#rails').empty();
+	$('#rails').empty();
 	for ( var i = 0; i < rails.length; i++ ){
 		data.index = i;
 		data.x = parseFloat(rails[i].x/scale).toFixed(2);
@@ -202,12 +202,10 @@ var MouseWheelHandler = function(event){
 var measureClick = function(){
 	if ( mode != STATE_MEASURE ){
 		mode = STATE_MEASURE;
-		$('#measure').addClass('btn-success');
-		$('#measure').removeClass('btn-default');
+		$('#measure').addClass('btn-active');
 	} else {
 		mode = STATE_DEFAULT;
-		$('#measure').removeClass('btn-success');
-		$('#measure').addClass('btn-default');
+		$('#measure').removeClass('btn-active');
 		stage.removeChild(measurePath);
 		disselectAll();
 		update = true;
@@ -217,12 +215,10 @@ var measureClick = function(){
 var pathMeasureClick = function(){
 	if ( mode != STATE_MEASURE_PATH ){
 		mode = STATE_MEASURE_PATH;
-		$('#pathMeasure').addClass('btn-success');
-		$('#pathMeasure').removeClass('btn-default');
+		$('#pathMeasure').addClass('btn-active');
 	} else {
 		mode = STATE_DEFAULT;
-		$('#pathMeasure').removeClass('btn-success');
-		$('#pathMeasure').addClass('btn-default');
+		$('#pathMeasure').removeClass('btn-active');
 		stage.removeChild(measureCurve);
 		disselectAll();
 		update = true;
@@ -231,7 +227,9 @@ var pathMeasureClick = function(){
 
 var saveClick = function(){
 	disselectAll();
-	$('#save').attr('href', canvas.toDataURL('image/png'));
+	$('#save-anchor').attr('href', canvas.toDataURL('image/png'));
+	$('#save-anchor')[0].click();
+	console.log('save');
 }
 
 var disselectAll = function(){

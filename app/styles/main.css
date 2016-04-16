@@ -37,27 +37,31 @@ li {
   position: absolute;
   top: 0;
   left: 0;
+  right: 0;
   bottom: 0;
   background-color: rgba(200, 200, 200, 0.75);
   display: inline-block;
   height: 100%;
+  /*transform: translateX(-95%);*/
+  z-index: 0;
 }
 
 .closed {
-  width: 0;
+  transform: translateX(calc(-100% + 60px));
 }
 .open {
-  width: 90%;
+
 }
 
 .quick_buttons {
-  position: absolute;
+  position: fixed;
   top: 0;
-  right: -50px;
+  right: 0;
   bottom: 0;
-  background-color: #783982;
-  width: 50px;
+  background-color: #FAB57A;
+  width: 60px;
   text-align: center;
+  padding-top: 85px;
 }
 
 .vertical {
@@ -65,6 +69,7 @@ li {
   background-size: contain;
   width: 14px;
   height: 15px;
+  margin: auto;
 }
 
 .oxer {
@@ -72,15 +77,14 @@ li {
   background-size: contain;
   width: 14px;
   height: 15px;
-}
-
-.quick_buttons .btn {
-  margin-top: 10px;
+  margin: auto;
 }
 
 #rails {
   overflow: hidden;
+  margin-right: 50px;
   height: 100%;
+  width: 95%;
 }
 
 #rails li {
@@ -98,12 +102,6 @@ li {
   background-color: rgba(0, 255, 0, 0.3);
 }
 
-/* Space out content a bit */
-body {
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,
@@ -112,17 +110,22 @@ body {
   padding-right: 15px;
 }
 
-/* Custom page header */
 .header {
-  border-bottom: 1px solid #e5e5e5;
+  position: relative;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+  height: 75px;
+
+  background: #F06868;
+  box-shadow: 0px 4px 24px 1px rgba(150,148,150,0.5);
+
+
 }
 
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
-  padding-bottom: 19px;
+.header h1{
+  margin: 0;
+  margin-left: 30px;
 }
 
 /* Custom page footer */
@@ -140,8 +143,31 @@ body {
   display: none;
 }
 
-.container-narrow > hr {
-  margin: 30px 0;
+.container-fluid {
+  margin-right: 80px;
+  margin-left: 80px;
+}
+
+.btn-round {
+  width: 40px;
+  height: 40px;
+  margin: auto;
+  margin-top: 5px;
+  border-radius: 50%;
+  background-color: #80D6FF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 10px 10px 25px -8px rgba(0,0,0,0.42);
+}
+
+.btn-active {
+  background-color: #EDF798;
+}
+
+.container {
+  background-color: red;
 }
 
 /* Responsive: Portrait tablets and up */

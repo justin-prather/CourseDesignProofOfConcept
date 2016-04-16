@@ -18,7 +18,7 @@ var keydownHandler = function(evt){
 			modifier.shift = true;
 			break;
 		case 8: // backspace
-			console.log( 'backspace' );
+			// console.log( 'backspace' );
 			if( $(':focus').length < 1 ){
 				evt.preventDefault();
 				jumpStack.sortDescending();
@@ -31,6 +31,20 @@ var keydownHandler = function(evt){
 				update = true;
 			}
 			break;
+			case 46: // delete
+				// console.log( 'backspace' );
+				if( $(':focus').length < 1 ){
+					evt.preventDefault();
+					jumpStack.sortDescending();
+					for( var i = 0; i < jumpStack.length(); i++ ){
+						var index = jumpStack.peek(i);
+						stage.removeChild(rails[index]);
+						rails.splice( index, 1 );
+					}
+					jumpStack.empty();
+					update = true;
+				}
+				break;
 		case 83: // s
 			modifier.snap = !modifier.snap;
 			$('#snapping-indicator').toggleClass('hide');

@@ -23,8 +23,11 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
+    <div class="header">
+      <h1>iCourse Dezign</h1>
+    </div>
 
-    <div class="container">
+    <div class="container-fluid">
 
       <div class="modal fade" tabindex="-1" role="dialog" id="helpModal">
         <div class="modal-dialog">
@@ -107,10 +110,6 @@
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
 
-      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#settingsCollapse" aria-expanded="false" aria-controls="settingsCollapse">
-        Settings
-      </button>
-      <button class="btn btn-primary" id="help" data-toggle="modal" data-target="#helpModal">Help!</button>
       <div id="snapping-indicator" class="btn btn-success hide">Snapping On</div>
       <div id="align-indicator" class="btn btn-success hide">Align</div>
       <div class="function-wrapper">
@@ -187,30 +186,36 @@
         </div>
 
         <div class="quick_buttons">
-          <button id="toggle-left-sidebar" class="btn btn-default" data-toggle="tooltip" title="View Jump List" data-placement="right" data-delay='{"show":"500", "hide":"300"}'>
+          <div id="toggle-left-sidebar" class="btn-round" data-toggle="tooltip" title="View Jump List" data-placement="right" >
             <span class="glyphicon glyphicon-chevron-right"></span>
-          </button>
-          <button class="btn btn-default" id="measure" data-toggle="tooltip" title="Straight Line Measure" data-placement="right" data-delay='{"show":"500", "hide":"300"}'>
+          </div>
+          <div class="btn-round" id="measure" data-toggle="tooltip" title="Straight Line Measure" data-placement="right" >
             <span class="fa fa-arrows-h"></span>
-          </button>
-          <button class="btn btn-default" id="pathMeasure" data-toggle="tooltip" title="Path Measure" data-placement="right" data-delay='{"show":"500", "hide":"300"}'>
+          </div>
+          <div class="btn-round" id="pathMeasure" data-toggle="tooltip" title="Path Measure" data-placement="right" >
             <span class="fa fa-chain"></span>
-          </button>
-          <div class="btn-group" data-toggle="tooltip" title="Select Jump Type" data-placement="right" data-delay='{"show":"500", "hide":"300"}'>
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <div id="jumpType" class="vertical"></div> 
-            </button>
+          </div>
+          <div class="btn-group" data-toggle="tooltip" title="Select Jump Type" data-placement="right" >
+            <div type="button" class="btn-round dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <div id="jumpType" class="vertical"></div>
+            </div>
             <ul id="jumpTypes" class="dropdown-menu">
               <li><a id="vertical" href="#">Vertical</a></li>
               <li><a id="oxer" href="#">Oxer</a></li>
             </ul>
           </div>
-          <a class="btn btn-default" href="#" download="my_course.png" id="save" data-toggle="tooltip" title="Download Course Image" data-placement="right" data-delay='{"show":"500", "hide":"300"}'>
-            <span class="glyphicon glyphicon-save"></span>
-          </a>
-          <button id="delete" class="btn btn-default" data-toggle="tooltip" title="Delete Selected" data-placement="right" data-delay='{"show":"500", "hide":"300"}'>
+          <div id="save" class="btn-round" data-toggle="tooltip" title="Download Course Image" data-placement="right" >
+              <span class="glyphicon glyphicon-save"></span>
+          </div>
+          <div id="delete" class="btn-round" data-toggle="tooltip" title="Delete Selected" data-placement="right" >
             <span class="glyphicon glyphicon-trash"></span>
-          </button>
+          </div>
+          <div class="btn-round" type="button" data-toggle="collapse" data-target="#settingsCollapse" aria-expanded="false" aria-controls="settingsCollapse">
+            <span class="fa fa-wrench"></span>
+          </div>
+          <div class="btn-round" id="help" data-toggle="modal" data-target="#helpModal">
+            <span class="fa fa-question"></span>
+          </div>
         </div>
       </div>
 
@@ -220,18 +225,7 @@
 
     </div>
 
-    <div id="print" class="hide">
-      <img src="" alt="" class="course-png">
-      <table class="table table-bordered">
-        <tr>
-          <th>X Position</th>
-          <th>Y Position</th>
-          <th>Spread</th>
-          <th>Rail Length</th>
-          <th>Angle</th>
-        </tr>
-      </table>
-    </div>
+    <a class="hide" href="#" download="my_course.png" id="save-anchor" >
 
 
     <!-- build:js(.) scripts/vendor.js -->
