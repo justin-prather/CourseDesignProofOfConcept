@@ -146,12 +146,19 @@ var setRingParams = function(){
 	gridSpacing = Number($('#grid').val());
 	var ratio = ringHeight/ringWidth;
 
-	var windowWidth = $('.container-fluid').width();
-	canvas.width = windowWidth;
+	var windowWidth = $('.canvas-wrapper').width();
+	var windowHeight = $('.canvas-wrapper').height();
+	console.log( windowHeight );
 
 	scale = windowWidth/ringWidth;
 
-	canvas.height = windowWidth*ratio;
+	if( windowWidth*ratio < windowHeight ){
+		canvas.width = windowWidth;
+		canvas.height = windowWidth*ratio;
+	} else {
+		canvas.height = windowHeight;
+		canvas.width = windowHeight*ratio;
+	}
 
 	drawGrid( gridSpacing * scale );
 

@@ -27,7 +27,7 @@
       <h1>iCourse Dezign</h1>
     </div>
 
-    <div class="container-fluid main-body">
+    <div class="main-body">
 
       <div class="modal fade" tabindex="-1" role="dialog" id="helpModal">
         <div class="modal-dialog">
@@ -110,10 +110,10 @@
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
 
-      <div id="snapping-indicator" class="btn btn-success hide">Snapping On</div>
-      <div id="align-indicator" class="btn btn-success hide">Align</div>
       <div class="function-wrapper">
         <div id="measurment" ></div>
+        <div id="snapping-indicator" class="btn btn-success no-show">Snapping On</div>
+        <div id="align-indicator" class="btn btn-success no-show">Align</div>
       </div>
       <div class="collapse" id="settingsCollapse">
         <div class="well">
@@ -145,9 +145,9 @@
         </div>
       </div>
 
-      <br><br>
-
-      <canvas id="demoCanvas"></canvas>
+      <div class="canvas-wrapper">
+        <canvas id="demoCanvas"></canvas>
+      </div>
 
       <div id="sidebar_left" class="closed">
         <div id="rails" class="container-fluid">

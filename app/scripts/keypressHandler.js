@@ -47,11 +47,11 @@ var keydownHandler = function(evt){
 				break;
 		case 83: // s
 			modifier.snap = !modifier.snap;
-			$('#snapping-indicator').toggleClass('hide');
+			$('#snapping-indicator').toggleClass('no-show');
 			break;
 		case 65: // a
 			modifier.alignJumps = true;
-			$('#align-indicator').removeClass('hide');
+			$('#align-indicator').removeClass('no-show');
 			break;
 		case 86: // v
 			jumpType = 'vertical';
@@ -101,7 +101,7 @@ var keyupHandler = function(evt){
 			break;
 		case 65: // a
 			modifier.alignJumps = false;
-			$('#align-indicator').addClass('hide');
+			$('#align-indicator').addClass('no-show');
 			break;
 		default: return;
 	}
