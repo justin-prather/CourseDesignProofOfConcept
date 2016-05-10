@@ -4,10 +4,10 @@ var keydownHandler = function(evt){
 		case 27: // escape
 			console.log( 'escape' );
 			mode = STATE_DEFAULT;
-			$('#pathMeasure').removeClass('btn-success');
-			$('#pathMeasure').addClass('btn-default');
-			$('#measure').removeClass('btn-success');
-			$('#measure').addClass('btn-default');
+			$('#pathMeasure').removeClass('btn-active');
+			// $('#pathMeasure').addClass('btn-default');
+			$('#measure').removeClass('btn-active');
+			// $('#measure').addClass('btn-default');
 			stage.removeChild(measurePath);
 			stage.removeChild(measureCurve);
 			disselectAll();
