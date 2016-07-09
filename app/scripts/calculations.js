@@ -41,7 +41,7 @@ function checkLineIntersection(line1StartX, line1StartY, line1EndX, line1EndY, l
         x = line2StartX + (b * (line2EndX - line2StartX));
         y = line2StartX + (b * (line2EndY - line2StartY));
         */
-    
+
     return result;
 };
 
@@ -78,12 +78,12 @@ var isStraightLine = function( jumpOne, jumpTwo ){
             if( angle % 180 ){ // jumping vertically
                 if( jumpOne.x == jumpTwo.x ){ // jumps are vertically alligned
                     console.log( 'jumping vertically');
-                    return distance; 
+                    return distance;
                 }
             } else{ // jumping horizontally
                 if( jumpOne.y == jumpTwo.y ){ // jumps are horizontally alligned
                     console.log( 'jumping horizontally');
-                    return distance; 
+                    return distance;
                  }
             }
         }
@@ -109,7 +109,7 @@ var isStraightLine = function( jumpOne, jumpTwo ){
         } else if( toFiveDecimals(jumpOne.x - hOffset) == twoX && toFiveDecimals(jumpOne.y - vOffset) == twoY ) {
             console.log( 'inline ');
             return distance;
-        } else if( toFiveDecimals(jumpOne.x + hOffset) == twoX && toFiveDecimals(jumpOne.y - vOffset) == twoY ){ 
+        } else if( toFiveDecimals(jumpOne.x + hOffset) == twoX && toFiveDecimals(jumpOne.y - vOffset) == twoY ){
             console.log( 'inline ');
             return distance;
         } else if( toFiveDecimals(jumpOne.x - hOffset) == twoX && toFiveDecimals(jumpOne.y + vOffset) == twoY ){
@@ -125,24 +125,21 @@ var toFiveDecimals = function( num ){
 
 var roundToN = function( num, round ){
     var resto = num%round;
-    if (resto <= (round/2)) { 
+    if (resto <= (round/2)) {
         return num-resto;
     } else {
         return num+round-resto;
     }
 }
 
+var incenter = function( Ax, Ay, Bx, By, Cx, Cy ){
+	var a = hypoteneus((Bx-Cx), (By-Cy));
+	var b = hypoteneus((Ax-Cx), (Ay-Cy));
+	var c = hypoteneus((Bx-Ax), (By-Ay));
+	var p = a+b+c;
 
+	var Ox = (a*Ax + b*Bx + c*Cx)/p;
+	var Oy = (a*Ay + b*By + c*Cy)/p;
 
-
-
-
-
-
-
-
-
-
-
-
-
+	return {Ox, Oy};
+}

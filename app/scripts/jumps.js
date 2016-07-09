@@ -220,7 +220,10 @@ var onContainerClick = function(evt){
 					curve.graphics.lineTo(startX2, startY2);
 					length += distance /*- (rails[jumpStack.peek(i-1)].spread*scale / 2) - (rails[jumpStack.peek(i)].spread*scale / 2)*/;
 				}
-			} else{
+			} else if ( intersect.x < 0 || intersect.x > canvas.width || intersect.y < 0 || intersect.y < canvas.height ){
+        console.log( "outside ring" );
+        incenter( startX1, startX2, endX1, endY1, intersect.x, intersect.y)
+      } else{
 				curve.graphics.quadraticCurveTo(intersect.x, intersect.y, startX2, startY2);
 
 				length += curveLength( startX1, startY1, intersect.x, intersect.y, startX2, startY2 )/* -
